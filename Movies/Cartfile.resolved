@@ -1,0 +1,6 @@
+github "Alamofire/Alamofire" "d927d24f38f5b4bf3ae10fa8db4df2c5a2ef4ff2"
+github "ReactiveCocoa/ReactiveCocoa" "7.2.0"
+github "ReactiveCocoa/ReactiveSwift" "3.1.0"
+github "antitypical/Result" "3.2.4"
+github "netguru/ResponseDetective" "1.2.4"
+github "onevcat/Kingfisher" "4.9.0"
