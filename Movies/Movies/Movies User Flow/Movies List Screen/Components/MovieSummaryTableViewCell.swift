@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import ReactiveSwift
 
 class MovieSummaryTableViewCell: UITableViewCell {
     
@@ -17,11 +18,16 @@ class MovieSummaryTableViewCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let starRatingView = StarRatingView()
     
-    var movieSummary: MovieSummary? {
+    var movieSummary: MovieSummary! {
         didSet {
-            titleLabel.text = movieSummary?.title
-            starRatingView.rating = (movieSummary?.rating ?? 0)/2
-            backdropImageView.kf.setImage(with: movieSummary?.backdropImageURL)
+            titleLabel.reactive.text <~ movieSummary.title
+                .producer.take(until: reactive.prepareForReuse)
+            
+            starRatingView.reactive.rating <~ movieSummary.rating
+                .producer.take(until: reactive.prepareForReuse)
+            
+            backdropImageView.reactive.imageURL <~ movieSummary.backdropImageURL
+                .producer.take(until: reactive.prepareForReuse)
         }
     }
 

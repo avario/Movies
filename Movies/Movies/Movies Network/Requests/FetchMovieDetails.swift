@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 
 extension MoviesNetwork {
+    
     struct FetchMovieDetails: NetworkRequest {
         let method: HTTPMethod = .get
         let path: String
@@ -20,4 +21,5 @@ extension MoviesNetwork {
         
         typealias Response = MovieDetails
     }
+    
 }

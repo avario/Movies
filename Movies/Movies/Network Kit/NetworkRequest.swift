@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 
 public protocol NetworkRequest {
+    
     var method: HTTPMethod { get }
     var path: String { get }
     var encoding: ParameterEncoding { get }
@@ -17,12 +18,14 @@ public protocol NetworkRequest {
     
     associatedtype Parameters: Encodable = EmptyParameters
     associatedtype Response: Decodable = EmptyResponse
+    
 }
 
 public struct EmptyParameters: Encodable { }
 public struct EmptyResponse: Encodable { }
 
 public extension NetworkRequest {
+    
     var parameters: EmptyParameters {
         return EmptyParameters()
     }
@@ -30,4 +33,5 @@ public extension NetworkRequest {
     var encoding: ParameterEncoding {
         return URLEncoding()
     }
+    
 }

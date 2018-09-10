@@ -26,7 +26,7 @@ class MovieDetailsScreen: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        title = movieSummary.title
+        title = movieSummary.title.value
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: activityIndicatorView)
     }
@@ -42,7 +42,7 @@ class MovieDetailsScreen: UIViewController {
         
         activityIndicatorView.startAnimating()
         
-        let request = MoviesNetwork.FetchMovieDetails(movieId: movieSummary.id)
+        let request = MoviesNetwork.FetchMovieDetails(movieId: movieSummary.id.value)
         moviesNetwork.reactive.request(request).start({ event in
             self.activityIndicatorView.stopAnimating()
             
@@ -51,11 +51,11 @@ class MovieDetailsScreen: UIViewController {
                 let yearDateFormatter = DateFormatter()
                 yearDateFormatter.dateFormat = "yyyy"
                 
-                self.posterImageView.kf.setImage(with: movieDetails.posterURL)
-                self.yearLabel.text = yearDateFormatter.string(from: movieDetails.releaseDate)
-                self.genresLabel.text = movieDetails.genres.map({ $0.name }).joined(separator: ", ")
-                self.overviewLabel.text = movieDetails.overview
-                self.starRatingView.rating = movieDetails.rating/2
+                self.posterImageView.kf.setImage(with: movieDetails.posterURL.value)
+                self.yearLabel.text = yearDateFormatter.string(from: movieDetails.releaseDate.value)
+                self.genresLabel.text = movieDetails.genres.value.map({ $0.name.value }).joined(separator: ", ")
+                self.overviewLabel.text = movieDetails.overview.value
+                self.starRatingView.rating = movieDetails.rating.value/2
             default:
                 break
             }

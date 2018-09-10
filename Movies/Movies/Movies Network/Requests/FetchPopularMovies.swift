@@ -13,7 +13,11 @@ extension MoviesNetwork {
     struct FetchPopularMovies: NetworkRequest {
         let method: HTTPMethod = .get
         let path: String = "discover/movie"
-        let parameters: Parameters = Parameters(sort_by: "popularity.desc")
+        let parameters: Parameters
+        
+        init(sortBy: String =  "popularity.desc") {
+            parameters = Parameters(sortBy: sortBy)
+        }
         
         struct Response: Decodable {
             let page: Int
@@ -21,7 +25,11 @@ extension MoviesNetwork {
         }
         
         struct Parameters: Encodable {
-            let sort_by: String
+            let sortBy: String
+            
+            enum CodingKeys: String, CodingKey {
+                case sortBy = "sort_by"
+            }
         }
     }
 }

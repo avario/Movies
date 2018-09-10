@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import ReactiveCocoa
+import ReactiveSwift
 
 class MoviesListScreen: UITableViewController {
     
-    var movies: [MovieSummary] = []
+    var movieSummaries: MutableProperty<[MovieSummary]> = MutableProperty([])
     
     let moviesNetwork: MoviesNetwork
     
@@ -49,7 +49,7 @@ class MoviesListScreen: UITableViewController {
             
             switch event {
             case .value(let response):
-                self.movies = response.results
+                self.movieSummaries.value = response.results
                 self.tableView.reloadData()
                 break
             default:
@@ -59,19 +59,19 @@ class MoviesListScreen: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return movieSummaries.value.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movieSummaryTableViewCell = tableView.dequeueReusableCell(withIdentifier: MovieSummaryTableViewCell.reuseIdentifier) as! MovieSummaryTableViewCell
         
-        movieSummaryTableViewCell.movieSummary = movies[indexPath.row]
+        movieSummaryTableViewCell.movieSummary = movieSummaries.value[indexPath.row]
         
         return movieSummaryTableViewCell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movieSummary = movies[indexPath.row]
+        let movieSummary = movieSummaries.value[indexPath.row]
         
         let movieDetailsScreen = MovieDetailsScreen(movieSummary: movieSummary, moviesNetwork: moviesNetwork)
         navigationController?.pushViewController(movieDetailsScreen, animated: true)

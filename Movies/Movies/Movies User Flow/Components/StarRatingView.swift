@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import ReactiveSwift
+import ReactiveCocoa
 
 class StarRatingView: UIView {
 
     var rating: Double = 0 {
         didSet {
             for (index, star) in stars.enumerated() {
-                if Double(index) < rating.rounded() {
+                if Double(index) < (rating / 2).rounded() {
                     star.textColor = .movieYellow
                 } else {
                     star.textColor = UIColor.white.withAlphaComponent(0.5)
@@ -79,4 +81,15 @@ class StarRatingView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
+
+extension Reactive where Base: StarRatingView {
+    
+    var rating: BindingTarget<Double> {
+        return makeBindingTarget { $0.rating = $1 }
+    }
+    
+}
+
+

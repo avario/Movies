@@ -1,6 +1,6 @@
 //
 //  MovieDetails.swift
-//  Abstract
+//  Movies
 //
 //  Created by Avario on 09/09/2018.
 //  Copyright © 2018 Avario. All rights reserved.
@@ -8,21 +8,26 @@
 
 import Foundation
 import Alamofire
+import ReactiveSwift
 
 struct MovieDetails: Codable {
+    
     struct Genre: Codable {
-        let id: Int
-        let name: String
+        // Properties
+        let id: Property<Int>
+        let name: Property<String>
     }
     
-    let id: Int
-    let title: String
-    let releaseDateString: String
-    let genres: [Genre]
-    let posterPath: String
-    let overview: String
-    let rating: Double
+    // Properties
+    let id: Property<Int>
+    let title: Property<String>
+    let releaseDateString: Property<String>
+    let genres: Property<[Genre]>
+    let posterPath: Property<String>
+    let overview: Property<String>
+    let rating: Property<Double>
     
+    // Coding Keys
     enum CodingKeys: String, CodingKey {
         case id
         case title
@@ -32,17 +37,26 @@ struct MovieDetails: Codable {
         case overview
         case rating = "vote_average"
     }
+    
 }
 
 extension MovieDetails {
-    var posterURL: URL? {
-        let url = try! "https://image.tmdb.org/t/p/w780".asURL()
-        return url.appendingPathComponent(posterPath)
+    
+    // Poster URL
+    var posterURL: Property<URL> {
+        return posterPath.map({ posterPath in
+            let url = try! "https://image.tmdb.org/t/p/w780".asURL()
+            return url.appendingPathComponent(posterPath)
+        })
     }
     
-    var releaseDate: Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.date(from: releaseDateString)!
+    // Release Date
+    var releaseDate: Property<Date> {
+        return releaseDateString.map({ releaseDateString in
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter.date(from: releaseDateString)!
+        })
     }
+    
 }

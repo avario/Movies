@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 import ReactiveSwift
-import Result
 
 open class NetworkService {
     
