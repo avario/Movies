@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 
 extension MoviesNetwork {
+
     struct FetchPopularMovies: NetworkRequest {
         let method: HTTPMethod = .get
         let path: String = "discover/movie"
@@ -32,4 +33,5 @@ extension MoviesNetwork {
             }
         }
     }
+
 }

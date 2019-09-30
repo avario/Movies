@@ -13,10 +13,10 @@ import ReactiveSwift
 open class NetworkService {
     
     open let baseURL: URL
-    open let sessionManager: SessionManager
+    open let sessionManager: Session
     open var persistentParameters: Parameters = [:]
     
-    public init(baseURL: URLConvertible, sessionManager: SessionManager = SessionManager.default) {
+    public init(baseURL: URLConvertible, sessionManager: Session = Session.default) {
         self.baseURL = try! baseURL.asURL()
         self.sessionManager = sessionManager
     }
@@ -35,7 +35,7 @@ open class NetworkService {
             parameters: parameters,
             encoding: request.encoding,
             headers: nil)
-        .responseJSONDecodable(completionHandler: completionHandler)
+        .responseDecodable(completionHandler: completionHandler)
     }
     
 }

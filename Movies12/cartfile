@@ -1,0 +1,4 @@
+github "onevcat/Kingfisher"
+github "ReactiveCocoa/ReactiveCocoa"
+github "Alamofire/Alamofire" "alamofire5"
+github "netguru/ResponseDetective"

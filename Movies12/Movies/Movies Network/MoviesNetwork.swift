@@ -15,7 +15,7 @@ class MoviesNetwork: NetworkService {
     init() {
         let configuration = URLSessionConfiguration.default
         ResponseDetective.enable(inConfiguration: configuration)
-        let manager = SessionManager(configuration: configuration)
+        let manager = Session(configuration: configuration)
         
         super.init(baseURL: "https://api.themoviedb.org/3/", sessionManager: manager)
         

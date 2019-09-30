@@ -11,13 +11,13 @@ import Alamofire
 import ReactiveSwift
 
 struct MovieDetails: Codable {
-    
+
     struct Genre: Codable {
         // Properties
         let id: Property<Int>
         let name: Property<String>
     }
-    
+
     // Properties
     let id: Property<Int>
     let title: Property<String>
@@ -26,7 +26,7 @@ struct MovieDetails: Codable {
     let posterPath: Property<String>
     let overview: Property<String>
     let rating: Property<Double>
-    
+
     // Coding Keys
     enum CodingKeys: String, CodingKey {
         case id
@@ -37,11 +37,11 @@ struct MovieDetails: Codable {
         case overview
         case rating = "vote_average"
     }
-    
+
 }
 
 extension MovieDetails {
-    
+
     // Poster URL
     var posterURL: Property<URL> {
         return posterPath.map({ posterPath in
@@ -49,7 +49,7 @@ extension MovieDetails {
             return url.appendingPathComponent(posterPath)
         })
     }
-    
+
     // Release Date
     var releaseDate: Property<Date> {
         return releaseDateString.map({ releaseDateString in
@@ -58,5 +58,5 @@ extension MovieDetails {
             return dateFormatter.date(from: releaseDateString)!
         })
     }
-    
+
 }
