@@ -10,9 +10,9 @@ import Foundation
 
 public protocol NetworkRequest {
 	
-	var method: NetworkService.HTTPMethod { get }
+	var method: HTTPMethod { get }
 	var path: String { get }
-	var encoding: NetworkService.ParameterEncoding { get }
+	var encoding: ParameterEncoding { get }
 	var parameters: Parameters { get }
 	
 	associatedtype Parameters: Encodable = EmptyParameters
@@ -29,7 +29,7 @@ public extension NetworkRequest {
 		return EmptyParameters()
 	}
 	
-	var encoding: NetworkService.ParameterEncoding {
+	var encoding: ParameterEncoding {
 		return .url
 	}
 	

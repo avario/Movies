@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-open class NetworkService {
+open class NetworkService: ObservableObject {
 
 	public let baseURL: URL
 	open var persistentParameters: Parameters = [:]
@@ -22,9 +22,7 @@ open class NetworkService {
 
 		let parametersData = try! JSONEncoder().encode(request.parameters)
 		var parameters = try! JSONSerialization.jsonObject(with: parametersData, options: .allowFragments) as! Parameters
-		parameters = parameters.merging(persistentParameters, uniquingKeysWith: { (first, _) -> CustomStringConvertible in
-			return first
-		})
+        parameters = parameters.merging(persistentParameters) { (_, persistent) in persistent }
 
 		let url = baseURL.appendingPathComponent(request.path)
 		var urlRequest: URLRequest
@@ -33,7 +31,7 @@ open class NetworkService {
 		case .url:
 			var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
 			urlComponents.queryItems = parameters.map { parameter in
-				URLQueryItem(name: parameter.key, value: parameter.value.description)
+				URLQueryItem(name: parameter.key, value: "\(parameter.value)")
 			}
 
 			urlRequest = URLRequest(url: urlComponents.url!)
@@ -49,26 +47,10 @@ open class NetworkService {
 				type: R.Response.self,
 				decoder: JSONDecoder())
 			.mapError(NetworkError.init)
+            .receive(on: DispatchQueue.main)
 			.eraseToAnyPublisher()
 	}
 
-	public typealias Parameters = [String: CustomStringConvertible]
-
-	public enum ParameterEncoding {
-		case url
-		case json
-	}
-
-	public enum HTTPMethod: String {
-		case connect
-		case delete
-		case get
-		case head
-		case options
-		case patch
-		case post
-		case put
-		case trace
-	}
+	public typealias Parameters = [String: Any]
 
 }

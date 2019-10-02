@@ -14,11 +14,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
 	
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-		let popularMoviesScreen = MoviesListScreen()
+
+		let moviesUserFlow = MoviesUserFlow()
+			.environmentObject(MoviesNetwork())
 		
 		if let windowScene = scene as? UIWindowScene {
 			let window = UIWindow(windowScene: windowScene)
-			window.rootViewController = UIHostingController(rootView: popularMoviesScreen)
+			window.rootViewController = UIHostingController(rootView: moviesUserFlow)
 			self.window = window
 			window.makeKeyAndVisible()
 		}

@@ -10,17 +10,25 @@ import SwiftUI
 
 struct MoviesListScreen: View {
 
-	@State private var movieSummaries: [MovieSummary] = []
+	@EnvironmentObject var moviesNetwork: MoviesNetwork
+
+	@ObservedObject var data: MoviesListScreenData
 
 	var body: some View {
-		List(movieSummaries) { movieSummary in
+		List(data.movieSummaries) { movieSummary in
 			MovieSummaryRow(movieSummary: movieSummary)
 		}
+		.padding([.top, .bottom], 6)
+		.onAppear { self.data.fetchMovies(from: self.moviesNetwork) }
+		.navigationBarTitle("Popular Movies")
+		.navigationBarItems(trailing: ActivityIndicator(isLoading: data.isLoading))
 	}
+
 }
 
 struct PopularMoviesScreen_Previews: PreviewProvider {
 	static var previews: some View {
-		MoviesListScreen()
+		MoviesListScreen(data: MoviesListScreenData())
+			.environmentObject(MoviesNetwork())
 	}
 }
