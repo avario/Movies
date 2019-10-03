@@ -15,10 +15,11 @@ struct MoviesListScreen: View {
 	@ObservedObject var data: MoviesListScreenData
 
 	var body: some View {
-		List(data.movieSummaries) { movieSummary in
-			MovieSummaryRow(movieSummary: movieSummary)
+		List {
+			ForEach(data.movieSummaries) { movieSummary in
+				MovieSummaryRow(movieSummary: movieSummary)
+			}
 		}
-		.padding([.top, .bottom], 6)
 		.onAppear { self.data.fetchMovies(from: self.moviesNetwork) }
 		.navigationBarTitle("Popular Movies")
 		.navigationBarItems(trailing: ActivityIndicator(isLoading: data.isLoading))

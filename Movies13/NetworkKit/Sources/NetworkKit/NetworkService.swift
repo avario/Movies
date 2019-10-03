@@ -15,6 +15,7 @@ open class NetworkService: ObservableObject {
 	open var persistentParameters: Parameters = [:]
 
 	public init(baseURL: URL) {
+
 		self.baseURL = baseURL
 	}
 
@@ -52,5 +53,18 @@ open class NetworkService: ObservableObject {
 	}
 
 	public typealias Parameters = [String: Any]
+
+}
+
+public extension Publisher {
+
+    func loading<Root>(into keyPath: ReferenceWritableKeyPath<Root, Bool>, on object: Root) -> AnyPublisher<Self.Output, Self.Failure> {
+
+        return self.handleEvents(
+            receiveSubscription: { _ in object[keyPath: keyPath] = true},
+            receiveCompletion: { _ in object[keyPath: keyPath] = false},
+            receiveCancel: { object[keyPath: keyPath] = false})
+            .eraseToAnyPublisher()
+    }
 
 }

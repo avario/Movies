@@ -16,7 +16,7 @@ struct StarRating: View {
 		HStack(spacing: 3) {
 			ForEach(1...5, id: \.self) { star in
 				Image(systemName: "star.fill")
-					.foregroundColor(star >= self.rating ? .yellow : .primary)
+					.foregroundColor(star >= self.rating ? Color.primary.opacity(0.5) : .yellow)
 			}
 		}
     }

@@ -9,13 +9,25 @@
 import SwiftUI
 
 struct MovieDetailsScreen: View {
+
+	@EnvironmentObject var moviesNetwork: MoviesNetwork
+
+	@ObservedObject var data: MoviesDetailsScreenData
+
+	let movieSummary: MovieSummary
+
 	var body: some View {
-		Text(/*@START_MENU_TOKEN@*/"Hello World!"/*@END_MENU_TOKEN@*/)
+		ScrollView {
+			VStack {
+				Text("Hello")
+			}
+		}
+		.navigationBarTitle(movieSummary.title)
 	}
 }
 
-struct MovieDetailsScreen_Previews: PreviewProvider {
-	static var previews: some View {
-		MovieDetailsScreen()
-	}
-}
+//struct MovieDetailsScreen_Previews: PreviewProvider {
+//	static var previews: some View {
+//		MovieDetailsScreen(movieSummary: )
+//	}
+//}

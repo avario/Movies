@@ -10,6 +10,7 @@ import Foundation
 import NetworkKit
 
 struct FetchMovieDetails: NetworkRequest {
+	
 	let method: HTTPMethod = .get
 	let path: String
 
