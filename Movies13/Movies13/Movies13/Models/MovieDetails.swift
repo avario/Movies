@@ -47,5 +47,9 @@ extension MovieDetails {
 		dateFormatter.dateFormat = "yyyy-MM-dd"
 		return dateFormatter.date(from: releaseDateString)!
 	}
+	
+	var starRating: Int {
+		return Int((rating / 2).rounded())
+	}
 
 }

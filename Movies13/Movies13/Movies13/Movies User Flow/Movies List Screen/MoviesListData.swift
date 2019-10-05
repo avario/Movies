@@ -1,5 +1,5 @@
 //
-//  MoviesListScreenData.swift
+//  MoviesListData.swift
 //  Movies13
 //
 //  Created by Avario Babushka on 2/10/19.

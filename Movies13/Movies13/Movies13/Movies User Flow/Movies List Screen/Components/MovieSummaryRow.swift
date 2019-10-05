@@ -17,7 +17,7 @@ struct MovieSummaryRow: View {
 		ZStack(alignment: .bottom) {
 			URLImage(url: movieSummary.backdropImageURL)
 				.scaledToFill()
-				.frame(height: 160)
+				.frame(height: 185)
 
 			VStack(alignment: .leading, spacing: 5) {
 				Text(verbatim: movieSummary.title)

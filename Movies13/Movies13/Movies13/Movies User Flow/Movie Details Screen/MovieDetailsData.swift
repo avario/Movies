@@ -1,5 +1,5 @@
 //
-//  MovieDetailsScreenData.swift
+//  MovieDetailsData.swift
 //  Movies13
 //
 //  Created by Avario Babushka on 4/10/19.
@@ -9,7 +9,7 @@
 import Combine
 import NetworkKit
 
-class MoviesDetailsScreenData: ObservableObject {
+class MovieDetailsData: ObservableObject {
 
 	@Published var isLoading: Bool = false
 	@Published var movieDetails: MovieDetails?

@@ -8,6 +8,9 @@
       location = "group:NetworkKit">
    </FileRef>
    <FileRef
+      location = "group:ChainKit">
+   </FileRef>
+   <FileRef
       location = "group:URLImage">
    </FileRef>
 </Workspace>
