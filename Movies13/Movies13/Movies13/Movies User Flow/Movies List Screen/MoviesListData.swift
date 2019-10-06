@@ -9,7 +9,14 @@
 import Combine
 import NetworkKit
 
-class MoviesListScreenData: ObservableObject {
+//protocol MoviesListData: ObservableObject {
+//	var isLoading: Bool { get }
+//	var movieSummaries: [MovieSummary] { get }
+//
+//	func fetchMovies(from moviesNetwork: MoviesNetwork)
+//}
+
+class MoviesListData: ObservableObject {// MoviesListNetworkData: MoviesListData {
 
 	@Published var isLoading: Bool = false
 	@Published var movieSummaries: [MovieSummary] = []

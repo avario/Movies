@@ -17,9 +17,7 @@ struct MoviesListScreen: View {
 	var body: some View {
 		List {
 			ForEach(data.movieSummaries) { movieSummary in
-				NavigationLink(destination: MovieDetailsScreen(data: MoviesDetailsData)) {
-					MovieSummaryRow(movieSummary: movieSummary)
-				}
+				MovieSummaryRow(movieSummary: movieSummary)
 			}
 		}
 		.onAppear { self.data.fetchMovies(from: self.moviesNetwork) }
@@ -29,9 +27,9 @@ struct MoviesListScreen: View {
 
 }
 
-struct PopularMoviesScreen_Previews: PreviewProvider {
-	static var previews: some View {
-		MoviesListScreen(data: MoviesListData())
-			.environmentObject(MoviesNetwork())
-	}
-}
+//struct PopularMoviesScreen_Previews: PreviewProvider {
+//	static var previews: some View {
+//		MoviesListScreen(data: MoviesListData())
+//			.environmentObject(MoviesNetwork())
+//	}
+//}

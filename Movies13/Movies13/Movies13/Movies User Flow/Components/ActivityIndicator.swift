@@ -28,5 +28,7 @@ struct ActivityIndicator: UIViewRepresentable {
 struct ActivityIndicator_Previews: PreviewProvider {
     static var previews: some View {
         ActivityIndicator(isLoading: true)
+		.previewLayout(.sizeThatFits)
+		.padding(10)
     }
 }

@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
 		let moviesUserFlow = NavigationView {
-			MoviesListScreen(data: MoviesListData())
+			Text("")//MoviesListScreen(data: MoviesListData())
 		}.environmentObject(MoviesNetwork())
 		
 		if let windowScene = scene as? UIWindowScene {
