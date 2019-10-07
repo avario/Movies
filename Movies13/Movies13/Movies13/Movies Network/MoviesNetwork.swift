@@ -12,7 +12,7 @@ import NetworkKit
 class MoviesNetwork: NetworkService {
 
 	init() {
-		super.init(baseURL: URL(string: "https://api.themoviedb.org/3/")!)
+		super.init(baseURL: URL(string: "https://api.themoviedb.org/3/")!, source: .network)
 		persistentParameters = ["api_key": "7141478ba63e445f5cc58583ed4bbb45"]
 	}
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUI
+import URLImage
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	
@@ -16,8 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
 		let moviesUserFlow = NavigationView {
-			Text("")//MoviesListScreen(data: MoviesListData())
-		}.environmentObject(MoviesNetwork())
+			MoviesListScreen(data: MoviesListData())
+		}
+		.environmentObject(MoviesNetwork())
+		.environmentObject(URLImageLoader(source: .local))
 		
 		if let windowScene = scene as? UIWindowScene {
 			let window = UIWindow(windowScene: windowScene)

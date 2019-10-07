@@ -7,61 +7,24 @@
 //
 
 import SwiftUI
-import Combine
 
 public struct URLImage: View {
-    @ObservedObject private var imageLoader: ImageLoader
+    @EnvironmentObject private var imageLoader: URLImageLoader
+
+	@ObservedObject private var request: URLImageLoader.Request
 
     public init(url: URL) {
-        imageLoader = ImageLoader(url: url)
+		request = URLImageLoader.Request(url: url)
     }
 
 	public var body: some View {
         ZStack {
-            if imageLoader.image != nil {
-                Image(uiImage: imageLoader.image!)
+            if request.image != nil {
+                Image(uiImage: request.image!)
                     .resizable()
             }
         }
-        .onAppear(perform: imageLoader.load)
-        .onDisappear(perform: imageLoader.cancel)
+		.onAppear { self.imageLoader.load(self.request) }
+        .onDisappear(perform: request.cancel)
     }
-}
-
-final internal class ImageLoader: ObservableObject {
-
-    @Published private(set) var image: UIImage? = nil
-
-    private let url: URL
-    private var cancellable: AnyCancellable?
-
-    init(url: URL) {
-        self.url = url
-    }
-
-    deinit {
-        cancellable?.cancel()
-    }
-
-    func load() {
-		cancel()
-
-		guard image == nil else {
-			return
-		}
-
-        cancellable = URLSession.shared
-            .dataTaskPublisher(for: url)
-			.map { UIImage(data: $0.data) }
-			.replaceError(with: nil)
-            .receive(on: DispatchQueue.main)
-			.sink(receiveCompletion: { _ in }, receiveValue: { [unowned self] (image) in
-				self.image = image
-			})
-    }
-
-    func cancel() {
-        cancellable?.cancel()
-    }
-
 }
