@@ -16,11 +16,9 @@ struct MoviesListScreen: View {
 	@ObservedObject var data = MoviesListData()
 
 	var body: some View {
-		List {
-			ForEach(data.movieSummaries) { movieSummary in
-				NavigationLink(destination: MovieDetailsScreen(movieSummary: movieSummary)) {
-					MovieSummaryRow(movieSummary: movieSummary)
-				}
+		List(data.movieSummaries) { movieSummary in
+			NavigationLink(destination: MovieDetailsScreen(movieSummary: movieSummary)) {
+				MovieSummaryRow(movieSummary: movieSummary)
 			}
 		}
 		.onAppear { self.data.fetchMovies(from: self.moviesNetwork) }
@@ -36,5 +34,7 @@ struct PopularMoviesScreen_Previews: PreviewProvider {
 		}
 		.environmentObject(MoviesNetwork().alwaysPreview())
 		.environmentObject(URLImageLoader().alwaysPreview())
+		.colorScheme(.dark)
+		.previewLayout(.sizeThatFits)
 	}
 }

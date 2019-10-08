@@ -19,49 +19,26 @@ struct MovieDetailsScreen: View {
 	let movieSummary: MovieSummary
 
 	var body: some View {
-		ScrollView {
+		List {
 			if data.movieDetails == nil {
 				EmptyView()
 			} else {
-				VStack {
-					URLImage(url: data.movieDetails!.posterURL)
-						.cornerRadius(5)
-						.padding([.leading, .trailing], 24)
-					
-					HStack {
-						Text(data.movieDetails!.releaseDate, formatter: Self.yearDateFormatter)
-							.font(.title)
-							.fontWeight(.heavy)
-						
-						Text(data.movieDetails!.genres.map { $0.name }.joined(separator: ", "))
-							.font(.callout)
-							.foregroundColor(.secondary)
-					}
-					
-					Text(data.movieDetails!.overview)
-						.foregroundColor(.secondary)
-					
-					StarRating(rating: data.movieDetails!.starRating)
-				}
+				MovieDetailsView(movieDetails: data.movieDetails!)
 			}
 		}
+		.onAppear { self.data.fetchMovieDetails(for: self.movieSummary, from: self.moviesNetwork) }
 		.navigationBarTitle(movieSummary.title)
 	}
-	
-	static let yearDateFormatter = DateFormatter()
-		.localizedDateFormatTemplate("yyyy")
-		
 }
 
-//struct MovieDetailsScreen_Previews: PreviewProvider {
-//	static var previews: some View {
-//		MovieDetailsScreen(movieSummary: )
-//	}
-//}
-
-extension Text {
+struct MovieDetailsScreen_Previews: PreviewProvider {
 	
-	init<R>(_ text: R, formatter: Formatter) where R: ReferenceConvertible {
-		self.init("\(text, formatter: formatter)")
+	static var previews: some View {
+		NavigationView {
+			MovieDetailsScreen(movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0])
+		}
+		.environmentObject(MoviesNetwork().alwaysPreview())
+		.environmentObject(URLImageLoader().alwaysPreview())
+		.previewLayout(.sizeThatFits)
 	}
 }

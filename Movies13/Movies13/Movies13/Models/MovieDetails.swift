@@ -12,9 +12,9 @@ struct MovieDetails: Codable {
 	
 	let id: Int
 	let title: String
-	private let releaseDateString: String
+	let releaseDateString: String
 	let genres: [Genre]
-	private let posterPath: String
+	let posterPath: String
 	let overview: String
 	let rating: Double
 

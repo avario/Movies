@@ -95,7 +95,9 @@ public extension Network {
             throw NetworkError.unknown
         }
 
-        return try JSONDecoder().decode(R.Response.self, from: asset.data)
+		let result = try JSONDecoder().decode(R.Response.self, from: asset.data)
+		
+        return result
 	}
 	
 }

@@ -19,8 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let moviesUserFlow = NavigationView {
 			MoviesListScreen()
 		}
-		.environmentObject(MoviesNetwork())
-		.environmentObject(URLImageLoader())
+		.environmentObject(MoviesNetwork().alwaysPreview())
+		.environmentObject(URLImageLoader().alwaysPreview())
 		
 		if let windowScene = scene as? UIWindowScene {
 			let window = UIWindow(windowScene: windowScene)
