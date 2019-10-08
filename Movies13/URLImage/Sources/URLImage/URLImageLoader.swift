@@ -10,19 +10,17 @@ import Combine
 
 final public class URLImageLoader: ObservableObject {
 
-    public enum Source {
+    internal enum Setting {
         case preview
         case network
     }
 
-    private let source: Source
+    private var setting: Setting = .network
 
-    public init(source: Source) {
-        self.source = source
-    }
+    public init() { }
 
     internal func load(_ request: Request) {
-        switch source {
+        switch setting {
         case .preview:
             let localURL = request.url.deletingPathExtension()
             var localName = localURL.absoluteString
@@ -48,6 +46,11 @@ final public class URLImageLoader: ObservableObject {
                     request.image = image
                 })
         }
+    }
+
+    public func alwaysPreview() -> Self {
+        setting = .preview
+        return self
     }
 
     internal class Request: ObservableObject {

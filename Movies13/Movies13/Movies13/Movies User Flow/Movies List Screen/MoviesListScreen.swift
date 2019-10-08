@@ -31,7 +31,7 @@ struct MoviesListScreen: View {
 struct PopularMoviesScreen_Previews: PreviewProvider {
 	static var previews: some View {
 		MoviesListScreen(data: MoviesListData())
-			.environmentObject(MoviesNetwork(source: .preview))
-			.environmentObject(URLImageLoader(source: .preview))
+			.environmentObject(MoviesNetwork().alwaysPreview())
+			.environmentObject(URLImageLoader().alwaysPreview())
 	}
 }

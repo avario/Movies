@@ -5,70 +5,97 @@
 
 import Foundation
 import Combine
+import UIKit
 
 open class Network: ObservableObject {
-	
-	public enum Source {
+
+	public let baseURL: URL
+	open var persistentParameters = Parameters()
+
+	public init(baseURL: URL) {
+		self.baseURL = baseURL
+	}
+
+	public typealias Parameters = [String: Any]
+
+	internal enum Setting {
 		case preview
 		case network
 	}
-	
-	private let source: Source
-	
-	public let baseURL: URL
-	open var persistentParameters: Parameters = [:]
-	
-	public init(baseURL: URL, source: Source) {
-		self.baseURL = baseURL
-		self.source = source
+
+	internal var setting: Setting = .network
+
+	public func alwaysPreview() -> Self {
+		setting = .preview
+		return self
 	}
-	
-	open func request<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
-		
-		switch source {
+}
+
+public extension Network {
+
+	func request<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
+		switch setting {
 		case .preview:
 			do {
-				return Result.success(try self.preview.request(request))
+				return Result.success(try preview(request))
 					.publisher.eraseToAnyPublisher()
-				
+
 			} catch {
 				return Result.failure(NetworkError.unknown)
 					.publisher.eraseToAnyPublisher()
 			}
-			
+
 		case .network:
-			let parametersData = try! JSONEncoder().encode(request.parameters)
-			var parameters = try! JSONSerialization.jsonObject(with: parametersData, options: .allowFragments) as! Parameters
-			parameters = parameters.merging(persistentParameters) { (_, persistent) in persistent }
-			
-			let url = baseURL.appendingPathComponent(request.path)
-			var urlRequest: URLRequest
-			
-			switch request.encoding {
-			case .url:
-				var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-				urlComponents.queryItems = parameters.map { parameter in
-					URLQueryItem(name: parameter.key, value: "\(parameter.value)")
-				}
-				
-				urlRequest = URLRequest(url: urlComponents.url!)
-				
-			case .json:
-				urlRequest = URLRequest(url: url)
-				urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
-			}
-			
-			return URLSession.shared.dataTaskPublisher(for: urlRequest)
-				.map { $0.data }
-				.decode(
-					type: R.Response.self,
-					decoder: JSONDecoder())
-				.mapError(NetworkError.init)
-				.receive(on: DispatchQueue.main)
-				.eraseToAnyPublisher()
+			return network(request)
 		}
 	}
-	
-	public typealias Parameters = [String: Any]
+
+	private func network<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
+
+		let parametersData = try! JSONEncoder().encode(request.parameters)
+		var parameters = try! JSONSerialization.jsonObject(with: parametersData, options: .allowFragments) as! Parameters
+		parameters = parameters.merging(persistentParameters) { (_, persistent) in persistent }
+
+		let url = baseURL.appendingPathComponent(request.path)
+		var urlRequest: URLRequest
+
+		switch request.encoding {
+		case .url:
+			var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+			urlComponents.queryItems = parameters.map { parameter in
+				URLQueryItem(name: parameter.key, value: "\(parameter.value)")
+			}
+
+			urlRequest = URLRequest(url: urlComponents.url!)
+
+		case .json:
+			urlRequest = URLRequest(url: url)
+			urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
+		}
+
+		return URLSession.shared.dataTaskPublisher(for: urlRequest)
+			.map { $0.data }
+			.decode(
+				type: R.Response.self,
+				decoder: JSONDecoder())
+			.mapError(NetworkError.init)
+			.receive(on: DispatchQueue.main)
+			.eraseToAnyPublisher()
+	}
+
+	func preview<R: NetworkRequest>(_ request: R) throws -> R.Response {
+
+		let localURL = baseURL.appendingPathComponent(request.path)
+        var localName = localURL.absoluteString
+        if let scheme = localURL.scheme {
+            localName = localName.replacingOccurrences(of: scheme, with: "").replacingOccurrences(of: "://", with: "")
+        }
+
+        guard let asset = NSDataAsset(name: localName) else {
+            throw NetworkError.unknown
+        }
+
+        return try JSONDecoder().decode(R.Response.self, from: asset.data)
+	}
 	
 }
