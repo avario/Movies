@@ -20,10 +20,8 @@ struct MovieDetailsScreen: View {
 
 	var body: some View {
 		List {
-			if data.movieDetails == nil {
-				EmptyView()
-			} else {
-				MovieDetailsView(movieDetails: data.movieDetails!)
+			data.movieDetails.map { movieDetails in
+				MovieDetailsView(movieDetails: movieDetails)
 			}
 		}
 		.onAppear { self.data.fetchMovieDetails(for: self.movieSummary, from: self.moviesNetwork) }

@@ -31,12 +31,11 @@ struct MovieSummaryRow: View {
 					Spacer()
 				}
 			}
-			.padding(15)
+			.padding()
 			.background(LinearGradient(gradient: Gradient(colors: [.clear, Color.black.opacity(0.5)]), startPoint: .top, endPoint: .bottom))
 		}
 		.cornerRadius(5)
 		.colorScheme(.dark)
-		.listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
 	}
 }
 
