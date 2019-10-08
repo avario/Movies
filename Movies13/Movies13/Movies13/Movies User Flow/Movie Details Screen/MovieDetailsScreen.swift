@@ -12,7 +12,7 @@ import ChainKit
 
 struct MovieDetailsScreen: View {
 
-	@EnvironmentObject var moviesNetwork: MoviesNetwork
+//	@EnvironmentObject var moviesNetwork: MoviesNetwork
 
 	@ObservedObject var data = MovieDetailsData()
 
@@ -24,7 +24,7 @@ struct MovieDetailsScreen: View {
 				MovieDetailsView(movieDetails: movieDetails)
 			}
 		}
-		.onAppear { self.data.fetchMovieDetails(for: self.movieSummary, from: self.moviesNetwork) }
+		.onAppear { self.data.fetchMovieDetails(for: self.movieSummary, from: MoviesNetwork()) }
 		.navigationBarTitle(movieSummary.title)
 	}
 }
@@ -35,8 +35,6 @@ struct MovieDetailsScreen_Previews: PreviewProvider {
 		NavigationView {
 			MovieDetailsScreen(movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0])
 		}
-		.environmentObject(MoviesNetwork().alwaysPreview())
-		.environmentObject(URLImageLoader().alwaysPreview())
 		.previewLayout(.sizeThatFits)
 	}
 }

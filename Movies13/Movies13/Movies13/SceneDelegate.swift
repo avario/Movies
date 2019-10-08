@@ -17,10 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
 		let moviesUserFlow = NavigationView {
-			MoviesListScreen()
+			MoviesListScreen(
+				model: MoviesListModel(),
+				actions: NetworkMoviesListActions(moviesNetwork: MoviesNetwork()))
 		}
-		.environmentObject(MoviesNetwork().alwaysPreview())
-		.environmentObject(URLImageLoader().alwaysPreview())
 		
 		if let windowScene = scene as? UIWindowScene {
 			let window = UIWindow(windowScene: windowScene)

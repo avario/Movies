@@ -7,24 +7,74 @@
 //
 
 import SwiftUI
+import Combine
 
 public struct URLImage: View {
-    @EnvironmentObject private var imageLoader: URLImageLoader
-
-	@ObservedObject private var request: URLImageLoader.Request
+    @ObservedObject private var imageLoader: ImageLoader
 
     public init(url: URL) {
-		request = URLImageLoader.Request(url: url)
+        imageLoader = ImageLoader(url: url)
     }
 
-	public var body: some View {
+    public var body: some View {
         ZStack {
-            if request.image != nil {
-                Image(uiImage: request.image!)
+            imageLoader.image.map { image in
+                Image(uiImage: image)
                     .resizable()
             }
         }
-		.onAppear { self.imageLoader.load(self.request) }
-        .onDisappear(perform: request.cancel)
+        .onAppear(perform: imageLoader.load)
+        .onDisappear(perform: imageLoader.cancel)
     }
+}
+
+final internal class ImageLoader: ObservableObject {
+
+    @Published private(set) var image: UIImage? = nil
+
+    private let url: URL
+    private var cancellable: AnyCancellable?
+
+    init(url: URL) {
+        self.url = url
+    }
+
+    deinit {
+        cancellable?.cancel()
+    }
+
+    func load() {
+        cancel()
+
+        guard image == nil else {
+            return
+        }
+
+        print(ProcessInfo.processInfo.environment)
+
+        guard ProcessInfo.processInfo.environment["PREVIEW"] == nil else {
+            let localURL = url.deletingPathExtension()
+            var localName = localURL.absoluteString
+            if let scheme = localURL.scheme {
+                localName = localName.replacingOccurrences(of: scheme, with: "").replacingOccurrences(of: "://", with: "")
+            }
+
+            image = UIImage(named: localName)
+            return
+        }
+
+        cancellable = URLSession.shared
+            .dataTaskPublisher(for: url)
+            .map { UIImage(data: $0.data) }
+            .replaceError(with: nil)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in }, receiveValue: { [unowned self] (image) in
+                self.image = image
+            })
+    }
+
+    func cancel() {
+        cancellable?.cancel()
+    }
+
 }

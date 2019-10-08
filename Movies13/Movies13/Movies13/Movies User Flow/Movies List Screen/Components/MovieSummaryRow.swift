@@ -34,15 +34,14 @@ struct MovieSummaryRow: View {
 			.padding()
 			.background(LinearGradient(gradient: Gradient(colors: [.clear, Color.black.opacity(0.5)]), startPoint: .top, endPoint: .bottom))
 		}
-		.cornerRadius(5)
 		.colorScheme(.dark)
+		.cornerRadius(5)
 	}
 }
 
 struct MovieSummaryRow_Previews: PreviewProvider {
 	static var previews: some View {
 		MovieSummaryRow(movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0])
-			.environmentObject(URLImageLoader().alwaysPreview())
 			.previewLayout(.sizeThatFits)
 	}
 }

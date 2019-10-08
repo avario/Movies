@@ -7,50 +7,17 @@ import Foundation
 import Combine
 import UIKit
 
-open class Network: ObservableObject {
+public protocol Network {
 
-	public let baseURL: URL
-	open var persistentParameters = Parameters()
+    var baseURL: URL { get }
+    var persistentParameters: Parameters { get }
 
-	public init(baseURL: URL) {
-		self.baseURL = baseURL
-	}
-
-	public typealias Parameters = [String: Any]
-
-	internal enum Setting {
-		case preview
-		case network
-	}
-
-	internal var setting: Setting = .network
-
-	public func alwaysPreview() -> Self {
-		setting = .preview
-		return self
-	}
+    typealias Parameters = [String: Any]
 }
 
 public extension Network {
 
 	func request<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
-		switch setting {
-		case .preview:
-			do {
-				return Result.success(try preview(request))
-					.publisher.eraseToAnyPublisher()
-
-			} catch {
-				return Result.failure(NetworkError.unknown)
-					.publisher.eraseToAnyPublisher()
-			}
-
-		case .network:
-			return network(request)
-		}
-	}
-
-	private func network<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
 
 		let parametersData = try! JSONEncoder().encode(request.parameters)
 		var parameters = try! JSONSerialization.jsonObject(with: parametersData, options: .allowFragments) as! Parameters

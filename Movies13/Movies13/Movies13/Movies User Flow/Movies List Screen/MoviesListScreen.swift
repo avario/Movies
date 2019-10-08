@@ -11,30 +11,36 @@ import URLImage
 
 struct MoviesListScreen: View {
 
-	@EnvironmentObject var moviesNetwork: MoviesNetwork
-
-	@ObservedObject var data = MoviesListData()
+	@ObservedObject var model: MoviesListModel
+	var actions: MoviesListActions
 
 	var body: some View {
-		List(data.movieSummaries) { movieSummary in
+		List(model.movieSummaries) { movieSummary in
 			NavigationLink(destination: MovieDetailsScreen(movieSummary: movieSummary)) {
 				MovieSummaryRow(movieSummary: movieSummary)
 			}
 		}
-		.onAppear { self.data.fetchMovies(from: self.moviesNetwork) }
+		.onAppear { self.actions.fetchMovies(into: self.model) }
 		.navigationBarTitle("Popular Movies")
-		.navigationBarItems(trailing: ActivityIndicator(isLoading: data.isLoading))
+		.navigationBarItems(trailing: ActivityIndicator(isLoading: model.isLoading))
 	}
 }
 
 struct PopularMoviesScreen_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationView {
-			MoviesListScreen()
+			MoviesListScreen(
+				model: model,
+				actions: EmptyMoviesListActions())
 		}
-		.environmentObject(MoviesNetwork().alwaysPreview())
-		.environmentObject(URLImageLoader().alwaysPreview())
 		.colorScheme(.dark)
 		.previewLayout(.sizeThatFits)
 	}
+
+	static var model: MoviesListModel = {
+		let model = MoviesListModel()
+		model.isLoading = false
+		model.movieSummaries = try! MoviesNetwork().preview(FetchPopularMovies()).results
+		return model
+	}()
 }
