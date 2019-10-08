@@ -14,7 +14,7 @@ struct MovieDetailsScreen: View {
 
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
 
-	@ObservedObject var data: MovieDetailsData
+	@ObservedObject var data = MovieDetailsData()
 
 	let movieSummary: MovieSummary
 

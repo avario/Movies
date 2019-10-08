@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
 		let moviesUserFlow = NavigationView {
-			MoviesListScreen(data: MoviesListData())
+			MoviesListScreen()
 		}
 		.environmentObject(MoviesNetwork())
 		.environmentObject(URLImageLoader())

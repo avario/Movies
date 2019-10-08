@@ -28,5 +28,4 @@ class MoviesListData: ObservableObject {
 	deinit {
 		request?.cancel()
 	}
-
 }

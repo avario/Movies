@@ -40,12 +40,10 @@ struct MovieSummaryRow: View {
 	}
 }
 
-//struct MovieSummaryRow_Previews: PreviewProvider {
-//	static var previews: some View {
-//		let movieSummaries = MoviesNetwork().request(FetchPopularMovies()).results
-//
-//		MovieSummaryRow(movieSummary: MoviesNetwork(source: .preview))
-//			.environmentObject(URLImageLoader(source: .preview))
-//			.previewLayout(.sizeThatFits)
-//	}
-//}
+struct MovieSummaryRow_Previews: PreviewProvider {
+	static var previews: some View {
+		MovieSummaryRow(movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0])
+			.environmentObject(URLImageLoader().alwaysPreview())
+			.previewLayout(.sizeThatFits)
+	}
+}
