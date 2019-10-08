@@ -6,9 +6,9 @@
 import Foundation
 
 public enum NetworkError: Error {
-	case unknown
+	case unknown(Error)
 	
 	init(error: Error) {
-		self = .unknown
+		self = .unknown(error)
 	}
 }

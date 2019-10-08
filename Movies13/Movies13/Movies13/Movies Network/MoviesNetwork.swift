@@ -9,10 +9,10 @@
 import Foundation
 import NetworkKit
 
-class MoviesNetwork: NetworkService {
+class MoviesNetwork: Network {
 
-	init() {
-		super.init(baseURL: URL(string: "https://api.themoviedb.org/3/")!, source: .network)
+	init(source: Source) {
+		super.init(baseURL: URL(string: "https://api.themoviedb.org/3/")!, source: source)
 		persistentParameters = ["api_key": "7141478ba63e445f5cc58583ed4bbb45"]
 	}
 

@@ -5,6 +5,6 @@
 import Foundation
 
 public enum ParameterEncoding {
-    case url
-    case json
+	case url
+	case json
 }

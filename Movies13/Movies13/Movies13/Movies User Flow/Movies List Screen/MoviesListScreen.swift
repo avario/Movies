@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct MoviesListScreen: View {
 
@@ -27,9 +28,10 @@ struct MoviesListScreen: View {
 
 }
 
-//struct PopularMoviesScreen_Previews: PreviewProvider {
-//	static var previews: some View {
-//		MoviesListScreen(data: MoviesListData())
-//			.environmentObject(MoviesNetwork())
-//	}
-//}
+struct PopularMoviesScreen_Previews: PreviewProvider {
+	static var previews: some View {
+		MoviesListScreen(data: MoviesListData())
+			.environmentObject(MoviesNetwork(source: .preview))
+			.environmentObject(URLImageLoader(source: .preview))
+	}
+}

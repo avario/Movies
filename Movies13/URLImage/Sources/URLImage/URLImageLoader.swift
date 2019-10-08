@@ -11,8 +11,8 @@ import Combine
 final public class URLImageLoader: ObservableObject {
 
     public enum Source {
+        case preview
         case network
-        case local
     }
 
     private let source: Source
@@ -23,12 +23,13 @@ final public class URLImageLoader: ObservableObject {
 
     internal func load(_ request: Request) {
         switch source {
-        case .local:
+        case .preview:
             let localURL = request.url.deletingPathExtension()
             var localName = localURL.absoluteString
             if let scheme = localURL.scheme {
-                localName = localName.replacingOccurrences(of: scheme, with: "")
+                localName = localName.replacingOccurrences(of: scheme, with: "").replacingOccurrences(of: "://", with: "")
             }
+            
             request.image = UIImage(named: localName)
 
         case .network:

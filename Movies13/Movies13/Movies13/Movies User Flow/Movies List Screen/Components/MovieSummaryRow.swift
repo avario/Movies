@@ -42,8 +42,10 @@ struct MovieSummaryRow: View {
 
 struct MovieSummaryRow_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieSummaryRow(movieSummary: FetchPopularMovies.preview.results.first!)
-		.previewLayout(.sizeThatFits)
-		.padding(10)
+		let movieSummaries = MoviesNetwork().request(FetchPopularMovies()).results
+
+		MovieSummaryRow(movieSummary: MoviesNetwork(source: .preview))
+			.environmentObject(URLImageLoader(source: .preview))
+			.previewLayout(.sizeThatFits)
 	}
 }
