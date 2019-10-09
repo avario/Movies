@@ -11,13 +11,15 @@ import Combine
 
 public struct URLImage: View {
 
-    @Environment(\.urlImagePreview) private var preview: URLImagePreview
+    @Environment(\.urlImagePreviewMode) private var previewMode: PreviewMode
 
-    @ObservedObject private var imageLoader: ImageLoader
-
-    public init(url: URL) {
-        imageLoader = ImageLoader(url: url)
-    }
+    @ObservedObject private var imageLoader = ImageLoader()
+	
+	private let url: URL
+	
+	public init(url: URL) {
+		self.url = url
+	}
 
     public var body: some View {
         ZStack {
@@ -26,37 +28,38 @@ public struct URLImage: View {
                     .resizable()
             }
         }
-        .onAppear(perform: imageLoader.load)
+		.onAppear { self.imageLoader.load(url: self.url, previewMode: self.previewMode) }
         .onDisappear(perform: imageLoader.cancel)
     }
+	
+	public enum PreviewMode: EnvironmentKey {
+
+		case automatic
+		case always
+		case never
+
+		public static let defaultValue: PreviewMode = .automatic
+	}
 }
 
 final internal class ImageLoader: ObservableObject {
 
     @Published private(set) var image: UIImage? = nil
 
-    private let url: URL
-    private let preview: URLImagePreview
-
     private var cancellable: AnyCancellable?
-
-    init(url: URL, preview: URLImagePreview) {
-        self.url = url
-        self.preview = preview
-    }
 
     deinit {
         cancellable?.cancel()
     }
 
-    func load() {
+	func load(url: URL, previewMode: URLImage.PreviewMode) {
         cancel()
 
         guard image == nil else {
             return
         }
 
-        switch preview {
+        switch previewMode {
         case .automatic:
             if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
                 fallthrough
@@ -90,22 +93,13 @@ final internal class ImageLoader: ObservableObject {
 
 }
 
-public enum URLImagePreview: EnvironmentKey {
-
-    case automatic
-    case always
-    case never
-
-    public static let defaultValue: URLImagePreview = .automatic
-}
-
 public extension EnvironmentValues {
-    var urlImagePreview: URLImagePreview {
+	var urlImagePreviewMode: URLImage.PreviewMode {
         get {
-            return self[URLImagePreview.self]
+			return self[URLImage.PreviewMode.self]
         }
         set {
-            self[URLImagePreview.self] = newValue
+			self[URLImage.PreviewMode.self] = newValue
         }
     }
 }

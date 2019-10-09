@@ -15,7 +15,7 @@ struct MoviesListScreen: View {
 
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
 
-	private let data: MoviesListData = .init()
+	public var data: MoviesListData? = .init()
 
 	var body: some View {
 		List(movieSummaries) { movieSummary in
@@ -23,7 +23,7 @@ struct MoviesListScreen: View {
 				MovieSummaryRow(movieSummary: movieSummary)
 			}
 		}
-		.onAppear { self.data.fetchMovies(from: self.moviesNetwork, into: self) }
+		.onAppear { self.data?.fetchMovies(from: self.moviesNetwork, into: self) }
 		.navigationBarItems(trailing: ActivityIndicator(isLoading: isLoading))
 		.navigationBarTitle("Popular Movies")
 	}
@@ -35,7 +35,8 @@ struct PopularMoviesScreen_Previews: PreviewProvider {
 		NavigationView {
 			MoviesListScreen(
 				movieSummaries: try! MoviesNetwork().preview(FetchPopularMovies()).results,
-				isLoading: false)
+				isLoading: false,
+				data: nil)
 		}
 		.environmentObject(MoviesNetwork())
 		.previewLayout(.sizeThatFits)

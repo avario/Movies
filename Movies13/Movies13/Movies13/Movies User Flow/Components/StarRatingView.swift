@@ -13,10 +13,10 @@ struct StarRating: View {
 	@State var rating: Int
 
     var body: some View {
-		HStack(spacing: 3) {
+		HStack {
 			ForEach(1...5, id: \.self) { star in
 				Image(systemName: "star.fill")
-					.foregroundColor(star > self.rating ? Color.primary.opacity(0.3) : .yellow)
+					.foregroundColor(star <= self.rating ? .yellow : Color.primary.opacity(0.3))
 			}
 		}
     }

@@ -19,7 +19,7 @@ struct MovieDetailsScreen: View {
 
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
 
-	private let data: MovieDetailsData = .init()
+	public var data: MovieDetailsData? = .init()
 
 	var body: some View {
 		ScrollView {
@@ -50,7 +50,7 @@ struct MovieDetailsScreen: View {
 				.padding()
 			}
 		}
-		.onAppear { self.data.fetchMovieDetails(for: self.movieSummary, from: self.moviesNetwork, into: self) }
+		.onAppear { self.data?.fetchMovieDetails(for: self.movieSummary, from: self.moviesNetwork, into: self) }
 		.navigationBarItems(trailing: ActivityIndicator(isLoading: isLoading))
 		.navigationBarTitle(movieSummary.title)
 	}
@@ -66,7 +66,8 @@ struct MovieDetailsScreen_Previews: PreviewProvider {
 			MovieDetailsScreen(
 				movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0],
 				movieDetails: try! MoviesNetwork().preview(FetchMovieDetails(movieId: 301528)),
-				isLoading: false)
+				isLoading: false,
+				data: nil)
 		}
 		.environmentObject(MoviesNetwork())
 		.previewLayout(.sizeThatFits)
