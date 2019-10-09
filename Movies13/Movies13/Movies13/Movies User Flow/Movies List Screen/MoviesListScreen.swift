@@ -11,8 +11,8 @@ import URLImage
 
 struct MoviesListScreen: View {
 
-	@ObservedObject var model: MoviesListModel
-	var actions: MoviesListActions
+	@ObservedObject var model = MoviesListModel()
+	var actions: MoviesListActions?
 
 	var body: some View {
 		List(model.movieSummaries) { movieSummary in
@@ -20,7 +20,7 @@ struct MoviesListScreen: View {
 				MovieSummaryRow(movieSummary: movieSummary)
 			}
 		}
-		.onAppear { self.actions.fetchMovies(into: self.model) }
+		.onAppear { self.actions?.fetchMovies(into: self.model) }
 		.navigationBarTitle("Popular Movies")
 		.navigationBarItems(trailing: ActivityIndicator(isLoading: model.isLoading))
 	}
@@ -30,17 +30,12 @@ struct PopularMoviesScreen_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationView {
 			MoviesListScreen(
-				model: model,
-				actions: EmptyMoviesListActions())
+				model: MoviesListModel(
+					isLoading: false,
+					movieSummaries: try! MoviesNetwork().preview(FetchPopularMovies()).results),
+				actions: nil)
 		}
 		.colorScheme(.dark)
 		.previewLayout(.sizeThatFits)
 	}
-
-	static var model: MoviesListModel = {
-		let model = MoviesListModel()
-		model.isLoading = false
-		model.movieSummaries = try! MoviesNetwork().preview(FetchPopularMovies()).results
-		return model
-	}()
 }

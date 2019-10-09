@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let moviesUserFlow = NavigationView {
 			MoviesListScreen(
 				model: MoviesListModel(),
-				actions: NetworkMoviesListActions(moviesNetwork: MoviesNetwork()))
+				actions: MoviesListActions(moviesNetwork: MoviesNetwork()))
 		}
 		
 		if let windowScene = scene as? UIWindowScene {

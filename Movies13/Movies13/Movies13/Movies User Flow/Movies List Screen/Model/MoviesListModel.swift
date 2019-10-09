@@ -8,8 +8,13 @@
 
 import Foundation
 
-class MoviesListModel: ObservableObject {
+final class MoviesListModel: ObservableObject {
 
-	@Published var isLoading: Bool = false
-	@Published var movieSummaries: [MovieSummary] = []
+	@Published var isLoading: Bool
+	@Published var movieSummaries: [MovieSummary]
+
+	init(isLoading: Bool = false, movieSummaries: [MovieSummary] = []) {
+		self.isLoading = isLoading
+		self.movieSummaries = movieSummaries
+	}
 }

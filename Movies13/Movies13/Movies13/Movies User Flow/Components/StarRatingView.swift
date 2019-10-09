@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StarRating: View {
 
-	let rating: Int
+	@State var rating: Int
 
     var body: some View {
 		HStack(spacing: 3) {
@@ -24,18 +24,10 @@ struct StarRating: View {
 
 struct StarRatingView_Previews: PreviewProvider {
     static var previews: some View {
-		Group {
-			StarRating(rating: 2)
+		ForEach(0...5, id: \.self) { rating in
+			StarRating(rating: rating)
 				.previewLayout(.sizeThatFits)
-				.previewDisplayName("2 Star | Light Mode")
 				.padding(10)
-			
-			StarRating(rating: 4)
-				.previewLayout(.sizeThatFits)
-				.previewDisplayName("4 Star | Dark Mode")
-				.padding(10)
-				.background(Color.black)
-				.environment(\.colorScheme, .dark)
 		}
     }
 }

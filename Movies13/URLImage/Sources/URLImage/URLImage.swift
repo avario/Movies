@@ -52,7 +52,7 @@ final internal class ImageLoader: ObservableObject {
 
         print(ProcessInfo.processInfo.environment)
 
-        guard ProcessInfo.processInfo.environment["PREVIEW"] == nil else {
+        guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == nil else {
             let localURL = url.deletingPathExtension()
             var localName = localURL.absoluteString
             if let scheme = localURL.scheme {

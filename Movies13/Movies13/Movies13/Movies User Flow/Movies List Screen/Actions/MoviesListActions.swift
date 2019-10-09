@@ -9,11 +9,7 @@
 import Combine
 import NetworkKit
 
-protocol MoviesListActions {
-	func fetchMovies(into model: MoviesListModel)
-}
-
-class NetworkMoviesListActions: MoviesListActions {
+class MoviesListActions {
 
 	let moviesNetwork: Network
 
@@ -35,8 +31,4 @@ class NetworkMoviesListActions: MoviesListActions {
 	deinit {
 		request?.cancel()
 	}
-}
-
-struct EmptyMoviesListActions: MoviesListActions {
-	func fetchMovies(into model: MoviesListModel) { }
 }

@@ -18,7 +18,7 @@ struct MovieDetailsView: View {
 			URLImage(url: movieDetails.posterURL)
 				.scaledToFit()
 				.cornerRadius(5)
-				.padding([.leading, .trailing])
+				.frame(height: 400)
 
 			HStack {
 				Text("\(movieDetails.releaseDate, formatter: Self.yearDateFormatter)")
@@ -45,14 +45,7 @@ struct MovieDetailsView: View {
 
 struct MovieDetails_Previews: PreviewProvider {
     static var previews: some View {
-		MovieDetailsView(
-			movieDetails: MovieDetails(
-				id: 100,
-				title: "Toy Story 4",
-				releaseDateString: "2019-06-19",
-				genres: [MovieDetails.Genre(id: 2, name: "Adventure")],
-				posterPath: "/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg",
-				overview: "Woody has always been confident about his place in the world and that his priority is taking care of his kid, whether that's Andy or Bonnie. But when Bonnie adds a reluctant new toy called \"Forky\" to her room, a road trip adventure alongside old and new friends will show Woody how big the world can be for a toy.",
-				rating: 7.6))
+		MovieDetailsView(movieDetails: try! MoviesNetwork().preview(FetchMovieDetails(movieId: 301528)))
+			.previewLayout(.sizeThatFits)
     }
 }
