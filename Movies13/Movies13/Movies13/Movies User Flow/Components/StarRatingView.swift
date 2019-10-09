@@ -16,11 +16,48 @@ struct StarRating: View {
 		HStack {
 			ForEach(1...5, id: \.self) { star in
 				Image(systemName: "star.fill")
-					.foregroundColor(star <= self.rating ? .yellow : Color.primary.opacity(0.3))
+					.foregroundColor(star <= self.rating ? .yellow : Color.primary.opacity(0.5))
 			}
 		}
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 struct StarRatingView_Previews: PreviewProvider {
     static var previews: some View {

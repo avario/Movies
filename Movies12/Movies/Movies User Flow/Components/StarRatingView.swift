@@ -27,42 +27,17 @@ class StarRatingView: UIView {
     private let stars: [UILabel]
     
     override init(frame: CGRect) {
-        // Star 1
-        let star1 = UILabel()
-        star1.text = "★"
-        star1.textColor = UIColor.white.withAlphaComponent(0.1)
-        star1.textAlignment = .center
-        star1.font = UIFont.preferredFont(forTextStyle: .callout)
-        
-        // Star 2
-        let star2 = UILabel()
-        star2.text = "★"
-        star2.textColor = UIColor.white.withAlphaComponent(0.1)
-        star2.textAlignment = .center
-        star2.font = UIFont.preferredFont(forTextStyle: .callout)
-        
-        // Star 3
-        let star3 = UILabel()
-        star3.text = "★"
-        star3.textColor = UIColor.white.withAlphaComponent(0.1)
-        star3.textAlignment = .center
-        star3.font = UIFont.preferredFont(forTextStyle: .callout)
-        
-        // Star 4
-        let star4 = UILabel()
-        star4.text = "★"
-        star4.textColor = UIColor.white.withAlphaComponent(0.1)
-        star4.textAlignment = .center
-        star4.font = UIFont.preferredFont(forTextStyle: .callout)
-        
-        // Star 5
-        let star5 = UILabel()
-        star5.text = "★"
-        star5.textColor = UIColor.white.withAlphaComponent(0.1)
-        star5.textAlignment = .center
-        star5.font = UIFont.preferredFont(forTextStyle: .callout)
-        
-        stars =  [star1, star2, star3, star4, star5]
+
+        // Star Labels
+        stars = (1...5).map { _ in
+            let star = UILabel()
+            star.text = "★"
+            star.textColor = UIColor.white.withAlphaComponent(0.1)
+            star.textAlignment = .center
+            star.font = UIFont.preferredFont(forTextStyle: .callout)
+
+            return star
+        }
         
         super.init(frame: frame)
         
