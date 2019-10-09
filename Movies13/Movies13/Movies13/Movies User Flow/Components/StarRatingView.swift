@@ -16,7 +16,7 @@ struct StarRating: View {
 		HStack(spacing: 3) {
 			ForEach(1...5, id: \.self) { star in
 				Image(systemName: "star.fill")
-					.foregroundColor(star > self.rating ? Color.primary.opacity(0.5) : .yellow)
+					.foregroundColor(star > self.rating ? Color.primary.opacity(0.3) : .yellow)
 			}
 		}
     }
@@ -27,7 +27,7 @@ struct StarRatingView_Previews: PreviewProvider {
 		ForEach(0...5, id: \.self) { rating in
 			StarRating(rating: rating)
 				.previewLayout(.sizeThatFits)
-				.padding(10)
+				.padding()
 		}
     }
 }

@@ -10,6 +10,9 @@ import SwiftUI
 import Combine
 
 public struct URLImage: View {
+
+    @Environment(\.urlImagePreview) private var preview: URLImagePreview
+
     @ObservedObject private var imageLoader: ImageLoader
 
     public init(url: URL) {
@@ -33,10 +36,13 @@ final internal class ImageLoader: ObservableObject {
     @Published private(set) var image: UIImage? = nil
 
     private let url: URL
+    private let preview: URLImagePreview
+
     private var cancellable: AnyCancellable?
 
-    init(url: URL) {
+    init(url: URL, preview: URLImagePreview) {
         self.url = url
+        self.preview = preview
     }
 
     deinit {
@@ -50,9 +56,12 @@ final internal class ImageLoader: ObservableObject {
             return
         }
 
-        print(ProcessInfo.processInfo.environment)
-
-        guard ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == nil else {
+        switch preview {
+        case .automatic:
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
+                fallthrough
+            }
+        case .always:
             let localURL = url.deletingPathExtension()
             var localName = localURL.absoluteString
             if let scheme = localURL.scheme {
@@ -61,6 +70,8 @@ final internal class ImageLoader: ObservableObject {
 
             image = UIImage(named: localName)
             return
+        case .never:
+            break
         }
 
         cancellable = URLSession.shared
@@ -77,4 +88,24 @@ final internal class ImageLoader: ObservableObject {
         cancellable?.cancel()
     }
 
+}
+
+public enum URLImagePreview: EnvironmentKey {
+
+    case automatic
+    case always
+    case never
+
+    public static let defaultValue: URLImagePreview = .automatic
+}
+
+public extension EnvironmentValues {
+    var urlImagePreview: URLImagePreview {
+        get {
+            return self[URLImagePreview.self]
+        }
+        set {
+            self[URLImagePreview.self] = newValue
+        }
+    }
 }

@@ -7,22 +7,18 @@
 //
 
 import Combine
-import NetworkKit
 
 class MovieDetailsData: ObservableObject {
 
-	@Published var isLoading: Bool = false
-	@Published var movieDetails: MovieDetails?
-
 	private var request: Cancellable?
 
-	func fetchMovieDetails(for movieSummary: MovieSummary, from moviesNetwork: MoviesNetwork) {
+	func fetchMovieDetails(for movieSummary: MovieSummary, from moviesNetwork: MoviesNetwork, into movieDetailsScreen: MovieDetailsScreen) {
 		request = moviesNetwork
 			.request(FetchMovieDetails(movieId: movieSummary.id))
-			.loading(into: \.isLoading, on: self)
 			.map { Optional($0) }
 			.replaceError(with: nil)
-			.assign(to: \.movieDetails, on: self)
+			.load(to: \.isLoading, on: movieDetailsScreen)
+			.assign(to: \.movieDetails, on: movieDetailsScreen)
 	}
 
 	deinit {

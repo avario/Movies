@@ -9,7 +9,7 @@ import Combine
 
 public extension Publisher {
 
-    func loading<Root>(into keyPath: ReferenceWritableKeyPath<Root, Bool>, on object: Root) -> AnyPublisher<Self.Output, Self.Failure> {
+    func load<Root>(to keyPath: ReferenceWritableKeyPath<Root, Bool>, on object: Root) -> AnyPublisher<Self.Output, Self.Failure> {
 
         return self.handleEvents(
             receiveSubscription: { _ in object[keyPath: keyPath] = true},

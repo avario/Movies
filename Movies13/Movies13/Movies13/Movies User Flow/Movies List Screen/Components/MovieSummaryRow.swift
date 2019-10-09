@@ -36,6 +36,7 @@ struct MovieSummaryRow: View {
 		}
 		.colorScheme(.dark)
 		.cornerRadius(5)
+		.shadow(radius: 5)
 	}
 }
 
@@ -43,5 +44,6 @@ struct MovieSummaryRow_Previews: PreviewProvider {
 	static var previews: some View {
 		MovieSummaryRow(movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0])
 			.previewLayout(.sizeThatFits)
+			.padding()
 	}
 }

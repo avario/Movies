@@ -7,35 +7,37 @@
 //
 
 import SwiftUI
-import URLImage
 
 struct MoviesListScreen: View {
 
-	@ObservedObject var model = MoviesListModel()
-	var actions: MoviesListActions?
+	@State var movieSummaries: [MovieSummary] = []
+	@State var isLoading: Bool = false
+
+	@EnvironmentObject var moviesNetwork: MoviesNetwork
+
+	private let data: MoviesListData = .init()
 
 	var body: some View {
-		List(model.movieSummaries) { movieSummary in
+		List(movieSummaries) { movieSummary in
 			NavigationLink(destination: MovieDetailsScreen(movieSummary: movieSummary)) {
 				MovieSummaryRow(movieSummary: movieSummary)
 			}
 		}
-		.onAppear { self.actions?.fetchMovies(into: self.model) }
+		.onAppear { self.data.fetchMovies(from: self.moviesNetwork, into: self) }
+		.navigationBarItems(trailing: ActivityIndicator(isLoading: isLoading))
 		.navigationBarTitle("Popular Movies")
-		.navigationBarItems(trailing: ActivityIndicator(isLoading: model.isLoading))
 	}
 }
 
 struct PopularMoviesScreen_Previews: PreviewProvider {
+
 	static var previews: some View {
 		NavigationView {
 			MoviesListScreen(
-				model: MoviesListModel(
-					isLoading: false,
-					movieSummaries: try! MoviesNetwork().preview(FetchPopularMovies()).results),
-				actions: nil)
+				movieSummaries: try! MoviesNetwork().preview(FetchPopularMovies()).results,
+				isLoading: false)
 		}
-		.colorScheme(.dark)
+		.environmentObject(MoviesNetwork())
 		.previewLayout(.sizeThatFits)
 	}
 }
