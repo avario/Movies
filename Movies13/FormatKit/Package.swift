@@ -4,20 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "ChainKit",
-	platforms: [.iOS(.v13)],
+    name: "FormatKit",
     products: [
         .library(
-            name: "ChainKit",
-            targets: ["ChainKit"]),
+            name: "FormatKit",
+            targets: ["FormatKit"]),
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "ChainKit",
+            name: "FormatKit",
             dependencies: []),
         .testTarget(
-            name: "ChainKitTests",
-            dependencies: ["ChainKit"]),
+            name: "FormatKitTests",
+            dependencies: ["FormatKit"]),
     ]
 )

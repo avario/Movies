@@ -12,14 +12,28 @@ public protocol Network {
     var baseURL: URL { get }
     var persistentParameters: Parameters { get }
 
+    var dateEncodingStrategy: JSONEncoder.DateEncodingStrategy { get }
+    var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy { get }
+
     typealias Parameters = [String: Any]
+}
+
+public extension Network {
+
+    var persistentParameters: Parameters { [:] }
+
+    var dateEncodingStrategy: JSONEncoder.DateEncodingStrategy { .deferredToDate }
+    var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy { .deferredToDate  }
 }
 
 public extension Network {
 
 	func request<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
 
-		let parametersData = try! JSONEncoder().encode(request.parameters)
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = dateEncodingStrategy
+
+        let parametersData = try! encoder.encode(request.parameters)
 		var parameters = try! JSONSerialization.jsonObject(with: parametersData, options: .allowFragments) as! Parameters
 		parameters = parameters.merging(persistentParameters) { (_, persistent) in persistent }
 
@@ -40,11 +54,14 @@ public extension Network {
 			urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
 		}
 
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = dateDecodingStrategy
+
 		return URLSession.shared.dataTaskPublisher(for: urlRequest)
 			.map { $0.data }
 			.decode(
 				type: R.Response.self,
-				decoder: JSONDecoder())
+				decoder: decoder)
 			.mapError(NetworkError.init)
 			.receive(on: DispatchQueue.main)
 			.eraseToAnyPublisher()
@@ -62,7 +79,10 @@ public extension Network {
             throw NetworkError.unknown
         }
 
-		let result = try JSONDecoder().decode(R.Response.self, from: asset.data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = dateDecodingStrategy
+
+		let result = try decoder.decode(R.Response.self, from: asset.data)
 		
         return result
 	}

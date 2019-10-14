@@ -1,7 +1,7 @@
 import XCTest
 
-import ChainKitTests
+import FormatKitTests
 
 var tests = [XCTestCaseEntry]()
-tests += ChainKitTests.allTests()
+tests += FormatKitTests.allTests()
 XCTMain(tests)

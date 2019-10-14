@@ -8,7 +8,7 @@
       location = "group:NetworkKit">
    </FileRef>
    <FileRef
-      location = "group:ChainKit">
+      location = "group:FormatKit">
    </FileRef>
    <FileRef
       location = "group:URLImage">

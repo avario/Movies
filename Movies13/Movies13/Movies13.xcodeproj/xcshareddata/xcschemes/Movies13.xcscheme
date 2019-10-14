@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B630736C2349EC6100399511"
-               BuildableName = "Movies13 Release.app"
-               BlueprintName = "Movies13 Release"
+               BlueprintIdentifier = "B66DCC752341BA6300E55E90"
+               BuildableName = "Movies13.app"
+               BlueprintName = "Movies13"
                ReferencedContainer = "container:Movies13.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B630736C2349EC6100399511"
-            BuildableName = "Movies13 Release.app"
-            BlueprintName = "Movies13 Release"
+            BlueprintIdentifier = "B66DCC752341BA6300E55E90"
+            BuildableName = "Movies13.app"
+            BlueprintName = "Movies13"
             ReferencedContainer = "container:Movies13.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B630736C2349EC6100399511"
-            BuildableName = "Movies13 Release.app"
-            BlueprintName = "Movies13 Release"
+            BlueprintIdentifier = "B66DCC752341BA6300E55E90"
+            BuildableName = "Movies13.app"
+            BlueprintName = "Movies13"
             ReferencedContainer = "container:Movies13.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -8,7 +8,7 @@
 
 import SwiftUI
 import URLImage
-import ChainKit
+import FormatKit
 
 struct MovieDetailsScreen: View {
 
