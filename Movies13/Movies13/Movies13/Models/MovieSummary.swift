@@ -13,7 +13,7 @@ struct MovieSummary: Decodable, Identifiable {
 	let id: Int
 	let title: String
 	private let rating: Double
-	private let backdropPath: String
+	private let backdropPath: String?
 
 	enum CodingKeys: String, CodingKey {
 		case id
@@ -26,7 +26,10 @@ struct MovieSummary: Decodable, Identifiable {
 
 extension MovieSummary {
 
-	var backdropImageURL: URL {
+	var backdropImageURL: URL? {
+		guard let backdropPath = backdropPath else {
+			return nil
+		}
 		let baseURL = URL(string: "https://image.tmdb.org/t/p/w1280")!
 		return baseURL.appendingPathComponent(backdropPath)
 	}

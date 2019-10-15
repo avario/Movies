@@ -19,16 +19,16 @@ struct FetchPopularMovies: NetworkRequest {
 		parameters = Parameters(sortBy: sortBy)
 	}
 
-	struct Response: Decodable {
-		let page: Int
-		let results: [MovieSummary]
-	}
-
 	struct Parameters: Encodable {
 		let sortBy: String
 
 		enum CodingKeys: String, CodingKey {
 			case sortBy = "sort_by"
 		}
+	}
+
+	struct Response: Decodable {
+		let page: Int
+		let results: [MovieSummary]
 	}
 }

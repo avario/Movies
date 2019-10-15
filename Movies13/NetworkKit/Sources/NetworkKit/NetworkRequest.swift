@@ -14,7 +14,6 @@ public protocol NetworkRequest {
 	
 	associatedtype Parameters: Encodable = EmptyParameters
 	associatedtype Response: Decodable = EmptyResponse
-	
 }
 
 public struct EmptyParameters: Encodable { }
@@ -29,5 +28,4 @@ public extension NetworkRequest {
 	var encoding: ParameterEncoding {
 		return .url
 	}
-	
 }
