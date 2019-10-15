@@ -24,5 +24,4 @@ class MovieDetailsData: ObservableObject {
 	deinit {
 		request?.cancel()
 	}
-
 }

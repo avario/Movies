@@ -26,8 +26,9 @@ struct StarRatingView_Previews: PreviewProvider {
     static var previews: some View {
 		ForEach(0...5, id: \.self) { rating in
 			StarRating(rating: rating)
-				.previewLayout(.sizeThatFits)
 				.padding()
+				.previewLayout(.sizeThatFits)
+				.previewDisplayName("\(rating) Rating")
 		}
     }
 }
