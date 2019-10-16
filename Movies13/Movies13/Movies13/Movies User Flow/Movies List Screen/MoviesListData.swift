@@ -8,16 +8,24 @@
 
 import Combine
 
-class MoviesListData {
+class MoviesListData: ObservableObject {
+
+	enum FetchMoviesState {
+		case loading
+		case error(message: String)
+		case loaded(movieSummaries: [MovieSummary])
+	}
+
+	@Published var fetchMoviesState: FetchMoviesState = .loading
 
 	private var request: Cancellable?
 
-	func fetchMovies(from moviesNetwork: MoviesNetwork, into moviesListScreen: MoviesListScreen) {
+	func fetchMovies(from moviesNetwork: MoviesNetwork) {
 		request = moviesNetwork
 			.request(FetchPopularMovies())
 			.map { .loaded(movieSummaries: $0.results) }
-			.replaceError(with: .failed(errorMessage: "Failed to load movies"))
-			.assign(to: \.fetchMoviesState, on: moviesListScreen)
+			.replaceError(with: .error(message: "Failed to load movies"))
+			.assign(to: \.fetchMoviesState, on: self)
 	}
 
 	deinit {
