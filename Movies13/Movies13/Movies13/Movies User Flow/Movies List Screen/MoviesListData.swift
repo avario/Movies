@@ -15,10 +15,9 @@ class MoviesListData {
 	func fetchMovies(from moviesNetwork: MoviesNetwork, into moviesListScreen: MoviesListScreen) {
 		request = moviesNetwork
 			.request(FetchPopularMovies())
-			.map { $0.results }
-			.replaceError(with: [])
-			.load(to: \.isLoading, on: moviesListScreen)
-			.assign(to: \.movieSummaries, on: moviesListScreen)
+			.map { .loaded(movieSummaries: $0.results) }
+			.replaceError(with: .failed(errorMessage: "Failed to load movies"))
+			.assign(to: \.fetchMoviesState, on: moviesListScreen)
 	}
 
 	deinit {
