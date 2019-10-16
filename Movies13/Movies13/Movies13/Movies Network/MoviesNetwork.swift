@@ -19,4 +19,11 @@ class MoviesNetwork: Network, ObservableObject {
 		.formatted(
 			DateFormatter()
 				.dateFormat("yyyy-MM-dd"))
+
+	var previewMode: NetworkPreviewMode = .noPreview
+
+	func preview(mode: NetworkPreviewMode) -> Self {
+        previewMode = mode
+        return self
+    }
 }
