@@ -5,7 +5,6 @@
 
 import Foundation
 import Combine
-import UIKit
 
 public protocol Network {
 
@@ -14,6 +13,8 @@ public protocol Network {
 
     var dateEncodingStrategy: JSONEncoder.DateEncodingStrategy { get }
     var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy { get }
+
+    var previewMode: NetworkPreviewMode { get }
 
     typealias Parameters = [String: Any]
 }
@@ -24,11 +25,43 @@ public extension Network {
 
     var dateEncodingStrategy: JSONEncoder.DateEncodingStrategy { .deferredToDate }
     var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy { .deferredToDate  }
+
+    var previewMode: NetworkPreviewMode { .automatic }
+}
+
+public enum NetworkPreviewMode {
+
+    case automatic
+    case alwaysPreview
+    case loadIndefinitely
+    case fail(error: NetworkError)
+    case neverPreview
 }
 
 public extension Network {
 
 	func request<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
+
+        switch previewMode {
+        case .automatic:
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
+                fallthrough
+            }
+        case .alwaysPreview:
+            return Result.success(try! preview(request))
+                .publisher.eraseToAnyPublisher()
+
+        case .loadIndefinitely:
+            return PassthroughSubject<R.Response, NetworkError>()
+                .eraseToAnyPublisher()
+
+        case .fail(let error):
+            return Result.failure(error)
+                .publisher.eraseToAnyPublisher()
+
+        case .neverPreview:
+            break
+        }
 
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = dateEncodingStrategy
