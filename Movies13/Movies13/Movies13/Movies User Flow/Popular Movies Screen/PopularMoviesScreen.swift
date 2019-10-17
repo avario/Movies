@@ -12,7 +12,7 @@ struct PopularMoviesScreen: View {
 
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
 
-	@ObservedObject private var popularMoviesFetcher: PopularMoviesFetcher = .init()
+	@ObservedObject var popularMoviesFetcher: PopularMoviesFetcher = .init()
 
 	var body: some View {
 		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
@@ -50,7 +50,6 @@ struct PopularMoviesScreen_Previews: PreviewProvider {
 			NavigationView {
 				PopularMoviesScreen()
 			}
-			.onAppear { UIView.setAnimationsEnabled(false) }
 			.environmentObject(MoviesNetwork().preview(mode: .success))
 			.previewDisplayName("Success")
 
@@ -66,6 +65,7 @@ struct PopularMoviesScreen_Previews: PreviewProvider {
 			.environmentObject(MoviesNetwork().preview(mode: .failure(error: .unknown)))
 			.previewDisplayName("Failure")
 		}
+		.onAppear { UIView.setAnimationsEnabled(false) }
 		.previewLayout(.sizeThatFits)
 	}
 }

@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let moviesUserFlow = NavigationView {
 			PopularMoviesScreen()
 		}
-		.environmentObject(MoviesNetwork())
+		.environmentObject(MoviesNetwork().preview(mode: .success))
 
 		let window = UIWindow(windowScene: windowScene)
 		window.rootViewController = UIHostingController(rootView: moviesUserFlow)

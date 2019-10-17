@@ -14,8 +14,8 @@ struct FetchMovieDetails: NetworkRequest {
 	let method: HTTPMethod = .get
 	let path: String
 
-	init(movieId: Int) {
-		path = "movie/" + String(movieId)
+	init(movieID: Int) {
+		path = "movie/" + String(movieID)
 	}
 
 	typealias Response = MovieDetails

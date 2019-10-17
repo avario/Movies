@@ -14,44 +14,54 @@ struct MovieDetailsScreen: View {
 
 	let movieSummary: MovieSummary
 
-	@State var movieDetails: MovieDetails? = nil
-	@State var isLoading: Bool = false
-
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
 
-	public var data: MovieDetailsData? = .init()
+	@ObservedObject var movieDetailsFetcher: MovieDetailsFetcher = .init()
 
 	var body: some View {
-		ScrollView {
-			movieDetails.map { movieDetails in
-				VStack(spacing: 10) {
-					URLImage(url: movieDetails.posterURL)
-						.scaledToFit()
-						.cornerRadius(5)
-						.frame(height: 400)
-						.shadow(radius: 10)
+		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
+			switch movieDetailsFetcher.state {
+			case .loading:
+				return AnyView(
+					ActivityIndicator()
+				)
 
-					HStack {
-						Text("\(movieDetails.releaseDate, formatter: Self.yearDateFormatter)")
-							.font(.title)
-							.fontWeight(.heavy)
-
-						Text(verbatim: movieDetails.genres.map { $0.name }.joined(separator: ", "))
-							.font(.caption)
-							.foregroundColor(.secondary)
-					}
-
-					Text(verbatim: movieDetails.overview)
-						.lineLimit(nil)
+			case .error(let errorMessage):
+				return AnyView(
+					Text(errorMessage)
 						.foregroundColor(.secondary)
+				)
 
-					StarRating(rating: movieDetails.starRating)
-				}
-				.padding()
+			case .fetched(let movieDetails):
+				return AnyView(
+					VStack(spacing: 10) {
+						URLImage(url: movieDetails.posterURL)
+							.scaledToFit()
+							.cornerRadius(5)
+							.frame(height: 400)
+							.shadow(radius: 10)
+
+						HStack {
+							Text("\(movieDetails.releaseDate, formatter: Self.yearDateFormatter)")
+								.font(.title)
+								.fontWeight(.heavy)
+
+							Text(verbatim: movieDetails.genres.map { $0.name }.joined(separator: ", "))
+								.font(.caption)
+								.foregroundColor(.secondary)
+						}
+
+						Text(verbatim: movieDetails.overview)
+							.lineLimit(nil)
+							.foregroundColor(.secondary)
+
+						StarRating(rating: movieDetails.starRating)
+					}
+					.padding()
+				)
 			}
 		}
-		.onAppear { self.data?.fetchMovieDetails(for: self.movieSummary, from: self.moviesNetwork, into: self) }
-		.navigationBarItems(trailing: ActivityIndicator(isLoading: isLoading))
+		.onAppear { self.movieDetailsFetcher.fetch(forMovieID: self.movieSummary.id, from: self.moviesNetwork) }
 		.navigationBarTitle(movieSummary.title)
 	}
 
@@ -61,15 +71,29 @@ struct MovieDetailsScreen: View {
 
 struct MovieDetailsScreen_Previews: PreviewProvider {
 
+	static let movieSummary = try! MoviesNetwork().preview(FetchPopularMovies()).results[0]
+	
 	static var previews: some View {
-		NavigationView {
-			MovieDetailsScreen(
-				movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0],
-				movieDetails: try! MoviesNetwork().preview(FetchMovieDetails(movieId: 301528)),
-				isLoading: false,
-				data: nil)
+		Group {
+			NavigationView {
+				MovieDetailsScreen(movieSummary: movieSummary)
+			}
+			.environmentObject(MoviesNetwork().preview(mode: .success))
+			.previewDisplayName("Success")
+
+			NavigationView {
+				MovieDetailsScreen(movieSummary: movieSummary)
+			}
+			.environmentObject(MoviesNetwork().preview(mode: .loading))
+			.previewDisplayName("Loading")
+
+			NavigationView {
+				MovieDetailsScreen(movieSummary: movieSummary)
+			}
+			.environmentObject(MoviesNetwork().preview(mode: .failure(error: .unknown)))
+			.previewDisplayName("Failure")
 		}
-		.environmentObject(MoviesNetwork())
+		.onAppear { UIView.setAnimationsEnabled(false) }
 		.previewLayout(.sizeThatFits)
 	}
 }
