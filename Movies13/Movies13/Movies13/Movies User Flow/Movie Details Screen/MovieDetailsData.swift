@@ -17,7 +17,6 @@ class MovieDetailsData: ObservableObject {
 			.request(FetchMovieDetails(movieId: movieSummary.id))
 			.map { Optional($0) }
 			.replaceError(with: nil)
-			.load(to: \.isLoading, on: movieDetailsScreen)
 			.assign(to: \.movieDetails, on: movieDetailsScreen)
 	}
 

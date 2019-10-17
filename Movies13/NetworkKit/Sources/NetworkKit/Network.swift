@@ -36,7 +36,7 @@ public enum NetworkPreviewMode {
 	case automatic
 	case success
 	case loading
-	case fail(error: NetworkError)
+	case failure(error: NetworkError)
 	case noPreview
 }
 
@@ -57,7 +57,7 @@ public extension Network {
 			return PassthroughSubject<R.Response, NetworkError>()
 				.eraseToAnyPublisher()
 
-		case .fail(let error):
+		case .failure(let error):
 			return Result.failure(error)
 				.publisher.eraseToAnyPublisher()
 
@@ -119,7 +119,7 @@ public extension Network {
 			return PassthroughSubject<UIImage, NetworkError>()
 				.eraseToAnyPublisher()
 
-		case .fail(let error):
+		case .failure(let error):
 			return Result.failure(error)
 				.publisher.eraseToAnyPublisher()
 
