@@ -18,24 +18,23 @@ struct PopularMoviesScreen: View {
 		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
 			switch popularMoviesFetcher.state {
 			case .loading:
-				return AnyView(
+				return
 					ActivityIndicator()
-				)
+						.eraseToAnyView()
 
 			case .error(let errorMessage):
-				return AnyView(
+				return
 					Text(errorMessage)
 						.foregroundColor(.secondary)
-				)
+						.eraseToAnyView()
 
 			case .fetched(let movieSummaries):
-				return AnyView(
+				return
 					ForEach(movieSummaries) { movieSummary in
 						NavigationLink(destination: MovieDetailsScreen(movieSummary: movieSummary)) {
 							MovieSummaryRow(movieSummary: movieSummary)
 						}
-					}
-				)
+					}.eraseToAnyView()
 			}
 		}
 		.onAppear { self.popularMoviesFetcher.fetch(from: self.moviesNetwork) }

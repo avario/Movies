@@ -1,7 +1,7 @@
 import XCTest
 
-import URLImageTests
+import NetworkImageTests
 
 var tests = [XCTestCaseEntry]()
-tests += URLImageTests.allTests()
+tests += NetworkImageTests.allTests()
 XCTMain(tests)

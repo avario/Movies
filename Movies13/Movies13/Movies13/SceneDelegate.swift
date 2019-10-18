@@ -22,13 +22,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let moviesUserFlow = NavigationView {
 			PopularMoviesScreen()
 		}
-		.environmentObject(MoviesNetwork().preview(mode: .success))
+		.environmentObject(MoviesNetwork())
 
 		let window = UIWindow(windowScene: windowScene)
 		window.rootViewController = UIHostingController(rootView: moviesUserFlow)
 		self.window = window
 		window.makeKeyAndVisible()
 	}
-	
+}
+
+extension View {
+	func eraseToAnyView() -> AnyView {
+		return AnyView(self)
+	}
 }
 

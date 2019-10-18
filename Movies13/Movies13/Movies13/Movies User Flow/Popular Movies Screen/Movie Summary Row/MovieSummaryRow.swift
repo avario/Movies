@@ -7,19 +7,19 @@
 //
 
 import SwiftUI
-import URLImage
+import NetworkImage
 
 struct MovieSummaryRow: View {
 
 	var movieSummary: MovieSummary
 
+	@EnvironmentObject var moviesImageNetwork: MoviesImageNetwork
+
 	var body: some View {
 		ZStack(alignment: .bottom) {
-			movieSummary.backdropImageURL.map { backdropImageURL in
-				URLImage(url: backdropImageURL)
+			NetworkImage(url: movieSummary.backdropImageURL)
 				.scaledToFill()
 				.frame(height: 185)
-			}
 
 			VStack(alignment: .leading, spacing: 5) {
 				Text(verbatim: movieSummary.title)

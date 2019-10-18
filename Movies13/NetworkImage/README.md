@@ -1,3 +1,3 @@
-# URLImage
+# NetworkImage
 
 A description of this package.

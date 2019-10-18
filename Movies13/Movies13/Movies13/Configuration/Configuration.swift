@@ -13,9 +13,12 @@ struct Configuration: Decodable {
 	let baseURL: URL
 	let apiKey: String
 
+	let imageBaseURL: URL
+
 	enum CodingKeys: String, CodingKey {
 		case baseURL = "Base URL"
 		case apiKey = "API Key"
+		case imageBaseURL = "Image Base URL"
 	}
 
 	static var shared: Self {

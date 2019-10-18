@@ -6,6 +6,7 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
+import Foundation
 import Combine
 
 class MovieDetailsFetcher: ObservableObject {
@@ -21,6 +22,7 @@ class MovieDetailsFetcher: ObservableObject {
 	func fetch(forMovieID movieID: Int, from moviesNetwork: MoviesNetwork) {
 		request = moviesNetwork
 			.request(FetchMovieDetails(movieID: movieID))
+			.receive(on: DispatchQueue.main)
 			.map { .fetched(movieDetails: $0) }
 			.replaceError(with: .error(message: "Failed to load movie details."))
 			.assign(to: \.state, on: self)

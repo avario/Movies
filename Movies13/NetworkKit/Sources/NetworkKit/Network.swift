@@ -28,7 +28,6 @@ public extension Network {
 	var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy { .deferredToDate  }
 
 	var previewMode: NetworkPreviewMode { .noPreview }
-
 }
 
 public enum NetworkPreviewMode {
@@ -42,140 +41,71 @@ public enum NetworkPreviewMode {
 
 public extension Network {
 
-	func request<R: NetworkRequest>(_ request: R) -> AnyPublisher<R.Response, NetworkError> {
+    func request<R: NetworkRequest>(_ request: R, previewMode: NetworkPreviewMode? = nil) -> AnyPublisher<R.Response, NetworkError> {
 
-		switch previewMode {
-		case .automatic:
-			if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
-				fallthrough
-			}
-		case .success:
-			return Result.success(try! preview(request))
-				.publisher.eraseToAnyPublisher()
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = dateDecodingStrategy
 
-		case .loading:
-			return PassthroughSubject<R.Response, NetworkError>()
-				.eraseToAnyPublisher()
+        return dataRequest(request, previewMode: previewMode)
+            .decode(
+                type: R.Response.self,
+                decoder: decoder)
+            .mapError(NetworkError.init)
+            .eraseToAnyPublisher()
+    }
 
-		case .failure(let error):
-			return Result.failure(error)
-				.publisher.eraseToAnyPublisher()
+    func dataRequest<R: NetworkDataRequest>(_ request: R, previewMode: NetworkPreviewMode? = nil) -> AnyPublisher<Data, NetworkError> {
 
-		case .noPreview:
-			break
-		}
+        switch previewMode ?? self.previewMode {
+        case .automatic:
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
+                fallthrough
+            }
+        case .success:
+            return Result.success(try! previewData(request))
+                .publisher.eraseToAnyPublisher()
 
-		let encoder = JSONEncoder()
-		encoder.dateEncodingStrategy = dateEncodingStrategy
+        case .loading:
+            return PassthroughSubject<Data, NetworkError>()
+                .eraseToAnyPublisher()
 
-		let parametersData = try! encoder.encode(request.parameters)
-		var parameters = try! JSONSerialization.jsonObject(with: parametersData, options: .allowFragments) as! Parameters
-		parameters = parameters.merging(persistentParameters) { (_, persistent) in persistent }
+        case .failure(let error):
+            return Result.failure(error)
+                .publisher.eraseToAnyPublisher()
 
-		let url = baseURL.appendingPathComponent(request.path)
-		var urlRequest: URLRequest
+        case .noPreview:
+            break
+        }
 
-		switch request.encoding {
-		case .url:
-			var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-			urlComponents.queryItems = parameters.map { parameter in
-				URLQueryItem(name: parameter.key, value: "\(parameter.value)")
-			}
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = dateEncodingStrategy
 
-			urlRequest = URLRequest(url: urlComponents.url!)
+        let parametersData = try! encoder.encode(request.parameters)
+        var parameters = try! JSONSerialization.jsonObject(with: parametersData, options: .allowFragments) as! Parameters
+        parameters = parameters.merging(persistentParameters) { (_, persistent) in persistent }
 
-		case .json:
-			urlRequest = URLRequest(url: url)
-			urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
-		}
+        let url = baseURL.appendingPathComponent(request.path)
+        var urlRequest: URLRequest
 
-		urlRequest.httpMethod = request.method.rawValue
+        switch request.encoding {
+        case .url:
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+            urlComponents.queryItems = parameters.map { parameter in
+                URLQueryItem(name: parameter.key, value: "\(parameter.value)")
+            }
 
-		let decoder = JSONDecoder()
-		decoder.dateDecodingStrategy = dateDecodingStrategy
+            urlRequest = URLRequest(url: urlComponents.url!)
 
-		return URLSession.shared.dataTaskPublisher(for: urlRequest)
-			.map { $0.data }
-			.decode(
-				type: R.Response.self,
-				decoder: decoder)
-			.mapError(NetworkError.init)
-			.receive(on: DispatchQueue.main)
-			.eraseToAnyPublisher()
-	}
+        case .json:
+            urlRequest = URLRequest(url: url)
+            urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: parameters)
+        }
 
-	func image(at path: String) -> AnyPublisher<UIImage, NetworkError> {
+        urlRequest.httpMethod = request.method.rawValue
 
-		switch previewMode {
-		case .automatic:
-			if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != nil {
-				fallthrough
-			}
-		case .success:
-			return Result.success(try! previewImage(at: path))
-				.publisher.eraseToAnyPublisher()
-
-		case .loading:
-			return PassthroughSubject<UIImage, NetworkError>()
-				.eraseToAnyPublisher()
-
-		case .failure(let error):
-			return Result.failure(error)
-				.publisher.eraseToAnyPublisher()
-
-		case .noPreview:
-			break
-		}
-
-		let url = baseURL.appendingPathComponent(path)
-
-		return URLSession.shared
-			.dataTaskPublisher(for: url)
-			.tryMap {
-				guard let image = UIImage(data: $0.data) else {
-					throw NetworkError.unknown
-				}
-				return image
-			}
-			.mapError(NetworkError.init)
-			.receive(on: DispatchQueue.main)
-			.eraseToAnyPublisher()
-	}
-
-	func previewImage(at path: String) throws -> UIImage {
-
-		let url = baseURL.appendingPathComponent(path)
-		let localURL = url.deletingPathExtension()
-		var localName = localURL.absoluteString
-		if let scheme = localURL.scheme {
-			localName = localName.replacingOccurrences(of: scheme, with: "").replacingOccurrences(of: "://", with: "")
-		}
-
-		guard let image = UIImage(named: localName) else {
-			throw NetworkError.unknown
-		}
-
-		return image
-	}
-
-	func preview<R: NetworkRequest>(_ request: R) throws -> R.Response {
-
-		let localURL = baseURL.appendingPathComponent(request.path)
-		var localName = localURL.absoluteString
-		if let scheme = localURL.scheme {
-			localName = localName.replacingOccurrences(of: scheme, with: "").replacingOccurrences(of: "://", with: "")
-		}
-
-		guard let asset = NSDataAsset(name: localName) else {
-			throw NetworkError.unknown
-		}
-
-		let decoder = JSONDecoder()
-		decoder.dateDecodingStrategy = dateDecodingStrategy
-
-		let result = try decoder.decode(R.Response.self, from: asset.data)
-		
-		return result
-	}
-	
+        return URLSession.shared.dataTaskPublisher(for: urlRequest)
+            .map { $0.data }
+            .mapError(NetworkError.init)
+            .eraseToAnyPublisher()
+    }
 }

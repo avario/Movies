@@ -13,3 +13,5 @@ DISPLAY_NAME = Movies Dev
 
 BASE_URL = api.themoviedb.org/3/
 API_KEY = 7141478ba63e445f5cc58583ed4bbb45
+
+IMAGE_BASE_URL = image.tmdb.org/t/p

@@ -8,9 +8,9 @@
       location = "group:NetworkKit">
    </FileRef>
    <FileRef
-      location = "group:FormatKit">
+      location = "group:NetworkImage">
    </FileRef>
    <FileRef
-      location = "group:URLImage">
+      location = "group:FormatKit">
    </FileRef>
 </Workspace>

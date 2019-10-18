@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import URLImage
+import NetworkImage
 import FormatKit
 
 struct MovieDetailsScreen: View {
@@ -22,20 +22,20 @@ struct MovieDetailsScreen: View {
 		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
 			switch movieDetailsFetcher.state {
 			case .loading:
-				return AnyView(
+				return
 					ActivityIndicator()
-				)
+						.eraseToAnyView()
 
 			case .error(let errorMessage):
-				return AnyView(
+				return
 					Text(errorMessage)
 						.foregroundColor(.secondary)
-				)
+						.eraseToAnyView()
 
 			case .fetched(let movieDetails):
-				return AnyView(
+				return
 					VStack(spacing: 10) {
-						URLImage(url: movieDetails.posterURL)
+						NetworkImage(url: movieDetails.posterURL)
 							.scaledToFit()
 							.cornerRadius(5)
 							.frame(height: 400)
@@ -58,7 +58,7 @@ struct MovieDetailsScreen: View {
 						StarRating(rating: movieDetails.starRating)
 					}
 					.padding()
-				)
+					.eraseToAnyView()
 			}
 		}
 		.onAppear { self.movieDetailsFetcher.fetch(forMovieID: self.movieSummary.id, from: self.moviesNetwork) }

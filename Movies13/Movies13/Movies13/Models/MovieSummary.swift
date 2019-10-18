@@ -26,9 +26,9 @@ struct MovieSummary: Decodable, Identifiable {
 
 extension MovieSummary {
 
-	var backdropImageURL: URL? {
+	var backdropImageURL: URL {
 		guard let backdropPath = backdropPath else {
-			return nil
+			return URL(string: "")!
 		}
 		let baseURL = URL(string: "https://image.tmdb.org/t/p/w1280")!
 		return baseURL.appendingPathComponent(backdropPath)
