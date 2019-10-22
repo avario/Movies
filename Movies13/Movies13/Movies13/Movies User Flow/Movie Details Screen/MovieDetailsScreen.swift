@@ -9,6 +9,7 @@
 import SwiftUI
 import NetworkImage
 import FormatKit
+import NetworkKit
 
 struct MovieDetailsScreen: View {
 
@@ -71,7 +72,7 @@ struct MovieDetailsScreen: View {
 
 struct MovieDetailsScreen_Previews: PreviewProvider {
 
-	static let movieSummary = try! MoviesNetwork().preview(FetchPopularMovies()).results[0]
+	static let movieSummary = try! FetchPopularMovies().preview(on: MoviesNetwork()).results[0]
 	
 	static var previews: some View {
 		Group {
@@ -90,7 +91,7 @@ struct MovieDetailsScreen_Previews: PreviewProvider {
 			NavigationView {
 				MovieDetailsScreen(movieSummary: movieSummary)
 			}
-			.environmentObject(MoviesNetwork().preview(mode: .failure(error: .unknown)))
+			.environmentObject(MoviesNetwork().preview(mode: .failure()))
 			.previewDisplayName("Failure")
 		}
 		.onAppear { UIView.setAnimationsEnabled(false) }

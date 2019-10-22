@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "NetworkImage",
+        "repositoryURL": "https://github.com/avario/NetworkImage",
+        "state": {
+          "branch": null,
+          "revision": "5cd1e2ca701cc62e32bd671a5d4d84d559da11d5",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

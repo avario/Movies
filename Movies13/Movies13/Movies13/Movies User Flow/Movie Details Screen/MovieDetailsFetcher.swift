@@ -22,9 +22,16 @@ class MovieDetailsFetcher: ObservableObject {
 	func fetch(forMovieID movieID: Int, from moviesNetwork: MoviesNetwork) {
 		request = moviesNetwork
 			.request(FetchMovieDetails(movieID: movieID))
-			.receive(on: DispatchQueue.main)
 			.map { .fetched(movieDetails: $0) }
-			.replaceError(with: .error(message: "Failed to load movie details."))
+			.catch { error -> Just<State> in
+				switch error {
+				case .local:
+					return Just(.error(message: "Failed to load movie details."))
+
+				case .remote(_, let content):
+					return Just(.error(message: content.message))
+				}
+			}
 			.assign(to: \.state, on: self)
 	}
 

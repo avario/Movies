@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import NetworkKit
 
 struct PopularMoviesScreen: View {
 
@@ -61,7 +62,7 @@ struct PopularMoviesScreen_Previews: PreviewProvider {
 			NavigationView {
 				PopularMoviesScreen()
 			}
-			.environmentObject(MoviesNetwork().preview(mode: .failure(error: .unknown)))
+			.environmentObject(MoviesNetwork().preview(mode: .failure()))
 			.previewDisplayName("Failure")
 		}
 		.onAppear { UIView.setAnimationsEnabled(false) }

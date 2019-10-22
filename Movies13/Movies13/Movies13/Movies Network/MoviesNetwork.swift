@@ -13,17 +13,28 @@ import FormatKit
 class MoviesNetwork: Network, ObservableObject {
 
 	let baseURL: URL = Configuration.shared.baseURL
-	let persistentParameters: Parameters = ["api_key": Configuration.shared.apiKey]
+	let persistentParameters: APICredentials = .init(apiKey: Configuration.shared.apiKey)
 
 	let dateDecodingStrategy: JSONDecoder.DateDecodingStrategy =
 		.formatted(
 			DateFormatter()
 				.dateFormat("yyyy-MM-dd"))
 
-	var previewMode: NetworkPreviewMode = .noPreview
+	struct APICredentials: Encodable {
+		let apiKey: String
 
-	func preview(mode: NetworkPreviewMode) -> Self {
-        previewMode = mode
-        return self
-    }
+		enum CodingKeys: String, CodingKey {
+			case apiKey = "api_key"
+		}
+	}
+
+	struct ErrorContent: Decodable {
+		let code: Int
+		let message: String
+
+		enum CodingKeys: String, CodingKey {
+			case code = "status_code"
+			case message = "status_message"
+		}
+	}
 }

@@ -13,8 +13,6 @@ struct MovieSummaryRow: View {
 
 	var movieSummary: MovieSummary
 
-	@EnvironmentObject var moviesImageNetwork: MoviesImageNetwork
-
 	var body: some View {
 		ZStack(alignment: .bottom) {
 			NetworkImage(url: movieSummary.backdropImageURL)
@@ -44,7 +42,7 @@ struct MovieSummaryRow: View {
 
 struct MovieSummaryRow_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieSummaryRow(movieSummary: try! MoviesNetwork().preview(FetchPopularMovies()).results[0])
+		MovieSummaryRow(movieSummary: try! FetchPopularMovies().preview(on: MoviesNetwork()).results[0])
 			.previewLayout(.sizeThatFits)
 			.padding()
 	}
