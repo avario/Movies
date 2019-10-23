@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../NetworkImage">
-   </FileRef>
-   <FileRef
-      location = "group:../../NetworkKit">
-   </FileRef>
-   <FileRef
       location = "group:Movies13/Movies13.xcodeproj">
    </FileRef>
    <FileRef

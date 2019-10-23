@@ -3,11 +3,20 @@
     "pins": [
       {
         "package": "NetworkImage",
-        "repositoryURL": "https://github.com/avario/NetworkImage",
+        "repositoryURL": "https://github.com/avario/NetworkImage.git",
         "state": {
           "branch": null,
-          "revision": "5cd1e2ca701cc62e32bd671a5d4d84d559da11d5",
-          "version": "1.0.0"
+          "revision": "5bd15719117e3253d498eda089666111ad2eccb8",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "NetworkKit",
+        "repositoryURL": "https://github.com/avario/NetworkKit.git",
+        "state": {
+          "branch": null,
+          "revision": "c4c1ebe3a90ac836a324e8154afbf6d0da2b2d95",
+          "version": "3.0.0"
         }
       }
     ]

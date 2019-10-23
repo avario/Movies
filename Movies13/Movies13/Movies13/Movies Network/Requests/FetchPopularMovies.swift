@@ -14,6 +14,7 @@ struct FetchPopularMovies: NetworkRequest {
 	let method: HTTPMethod = .get
 	let path: String = "discover/movie"
 	let parameters: Parameters
+	let encoding: ParameterEncoding = .url
 
 	init(sortBy: String =  "popularity.desc") {
 		parameters = Parameters(sortBy: sortBy)
