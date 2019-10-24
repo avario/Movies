@@ -46,25 +46,10 @@ struct PopularMoviesScreen: View {
 struct PopularMoviesScreen_Previews: PreviewProvider {
 
 	static var previews: some View {
-		Group {
-			NavigationView {
-				PopularMoviesScreen()
-			}
-			.environmentObject(MoviesNetwork().preview(mode: .success))
-			.previewDisplayName("Success")
-
-			NavigationView {
-				PopularMoviesScreen()
-			}
-			.environmentObject(MoviesNetwork().preview(mode: .loading))
-			.previewDisplayName("Loading")
-
-			NavigationView {
-				PopularMoviesScreen()
-			}
-			.environmentObject(MoviesNetwork().preview(mode: .failure()))
-			.previewDisplayName("Failure")
+		NavigationView {
+			PopularMoviesScreen()
 		}
+		.environmentObject(MoviesNetwork().preview(.always))
 		.onAppear { UIView.setAnimationsEnabled(false) }
 		.previewLayout(.sizeThatFits)
 	}

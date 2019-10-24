@@ -20,16 +20,16 @@ class MovieDetailsFetcher: ObservableObject {
 	@Published var state: State = .loading
 
 	func fetch(forMovieID movieID: Int, from moviesNetwork: MoviesNetwork) {
-		request = moviesNetwork
-			.request(FetchMovieDetails(movieID: movieID))
+		request = FetchMovieDetails(movieID: movieID)
+			.request(on: moviesNetwork)
 			.map { .fetched(movieDetails: $0) }
 			.catch { error -> Just<State> in
 				switch error {
 				case .local:
 					return Just(.error(message: "Failed to load movie details."))
 
-				case .remote(_, let content):
-					return Just(.error(message: content.message))
+				case .remote(let remoteError):
+					return Just(.error(message: remoteError.message))
 				}
 			}
 			.assign(to: \.state, on: self)

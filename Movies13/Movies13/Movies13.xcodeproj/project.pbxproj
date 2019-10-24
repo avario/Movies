@@ -501,7 +501,7 @@
 			repositoryURL = "https://github.com/avario/NetworkImage.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 4.0.0;
 			};
 		};
 		B6E72202235D33720001CEB7 /* XCRemoteSwiftPackageReference "NetworkKit" */ = {
@@ -509,7 +509,7 @@
 			repositoryURL = "https://github.com/avario/NetworkKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 4.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

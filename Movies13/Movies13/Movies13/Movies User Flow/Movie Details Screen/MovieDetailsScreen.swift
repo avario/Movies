@@ -75,25 +75,10 @@ struct MovieDetailsScreen_Previews: PreviewProvider {
 	static let movieSummary = try! FetchPopularMovies().preview(on: MoviesNetwork()).results[0]
 	
 	static var previews: some View {
-		Group {
-			NavigationView {
-				MovieDetailsScreen(movieSummary: movieSummary)
-			}
-			.environmentObject(MoviesNetwork().preview(mode: .success))
-			.previewDisplayName("Success")
-
-			NavigationView {
-				MovieDetailsScreen(movieSummary: movieSummary)
-			}
-			.environmentObject(MoviesNetwork().preview(mode: .loading))
-			.previewDisplayName("Loading")
-
-			NavigationView {
-				MovieDetailsScreen(movieSummary: movieSummary)
-			}
-			.environmentObject(MoviesNetwork().preview(mode: .failure()))
-			.previewDisplayName("Failure")
+		NavigationView {
+			MovieDetailsScreen(movieSummary: movieSummary)
 		}
+		.environmentObject(MoviesNetwork().preview(.always))
 		.onAppear { UIView.setAnimationsEnabled(false) }
 		.previewLayout(.sizeThatFits)
 	}

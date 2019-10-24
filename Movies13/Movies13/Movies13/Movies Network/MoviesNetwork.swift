@@ -28,7 +28,7 @@ class MoviesNetwork: Network, ObservableObject {
 		}
 	}
 
-	struct ErrorContent: Decodable {
+	struct RemoteError: Decodable {
 		let code: Int
 		let message: String
 
