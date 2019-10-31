@@ -13,7 +13,7 @@ import FormatKit
 class MoviesNetwork: Network, ObservableObject {
 
 	let baseURL: URL = Configuration.shared.baseURL
-	let persistentParameters: APICredentials = .init(apiKey: Configuration.shared.apiKey)
+	let parameters: APICredentials = .init(apiKey: Configuration.shared.apiKey)
 
 	let dateDecodingStrategy: JSONDecoder.DateDecodingStrategy =
 		.formatted(

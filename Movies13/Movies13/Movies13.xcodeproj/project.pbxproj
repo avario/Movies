@@ -17,6 +17,8 @@
 		B607F3882344354C008DBE67 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B607F3872344354C008DBE67 /* ActivityIndicator.swift */; };
 		B607F3A4234705D9008DBE67 /* MovieDetailsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B607F3A3234705D9008DBE67 /* MovieDetailsFetcher.swift */; };
 		B61F0641234D7F6600029957 /* PopularMoviesFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61F0640234D7F6600029957 /* PopularMoviesFetcher.swift */; };
+		B65975B8236A629600815101 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = B65975B7236A629600815101 /* NetworkKit */; };
+		B65975BB236A62A800815101 /* NetworkImage in Frameworks */ = {isa = PBXBuildFile; productRef = B65975BA236A62A800815101 /* NetworkImage */; };
 		B66DCC7A2341BA6300E55E90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66DCC792341BA6300E55E90 /* AppDelegate.swift */; };
 		B66DCC7C2341BA6300E55E90 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66DCC7B2341BA6300E55E90 /* SceneDelegate.swift */; };
 		B66DCC802341BA6400E55E90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B66DCC7F2341BA6400E55E90 /* Assets.xcassets */; };
@@ -26,8 +28,6 @@
 		B66DCC9223429B3900E55E90 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66DCC9123429B3900E55E90 /* StarRatingView.swift */; };
 		B69AB6D42354225B0016883E /* FormatKit in Frameworks */ = {isa = PBXBuildFile; productRef = B69AB6D32354225B0016883E /* FormatKit */; };
 		B69AB6DD235552A70016883E /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69AB6DC235552A70016883E /* Configuration.swift */; };
-		B6DB2091235FDD7B006C03B4 /* NetworkImage in Frameworks */ = {isa = PBXBuildFile; productRef = B6DB2090235FDD7B006C03B4 /* NetworkImage */; };
-		B6E72204235D33720001CEB7 /* NetworkKit in Frameworks */ = {isa = PBXBuildFile; productRef = B6E72203235D33720001CEB7 /* NetworkKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,8 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6DB2091235FDD7B006C03B4 /* NetworkImage in Frameworks */,
-				B6E72204235D33720001CEB7 /* NetworkKit in Frameworks */,
+				B65975BB236A62A800815101 /* NetworkImage in Frameworks */,
+				B65975B8236A629600815101 /* NetworkKit in Frameworks */,
 				B69AB6D42354225B0016883E /* FormatKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,8 +222,8 @@
 			name = Movies13;
 			packageProductDependencies = (
 				B69AB6D32354225B0016883E /* FormatKit */,
-				B6E72203235D33720001CEB7 /* NetworkKit */,
-				B6DB2090235FDD7B006C03B4 /* NetworkImage */,
+				B65975B7236A629600815101 /* NetworkKit */,
+				B65975BA236A62A800815101 /* NetworkImage */,
 			);
 			productName = Movies13;
 			productReference = B66DCC762341BA6300E55E90 /* Movies13.app */;
@@ -254,8 +254,8 @@
 			);
 			mainGroup = B66DCC6D2341BA6300E55E90;
 			packageReferences = (
-				B6E72202235D33720001CEB7 /* XCRemoteSwiftPackageReference "NetworkKit" */,
-				B6DB208F235FDD7B006C03B4 /* XCRemoteSwiftPackageReference "NetworkImage" */,
+				B65975B6236A629600815101 /* XCRemoteSwiftPackageReference "NetworkKit" */,
+				B65975B9236A62A800815101 /* XCRemoteSwiftPackageReference "NetworkImage" */,
 			);
 			productRefGroup = B66DCC772341BA6300E55E90 /* Products */;
 			projectDirPath = "";
@@ -496,38 +496,38 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B6DB208F235FDD7B006C03B4 /* XCRemoteSwiftPackageReference "NetworkImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/avario/NetworkImage.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-		B6E72202235D33720001CEB7 /* XCRemoteSwiftPackageReference "NetworkKit" */ = {
+		B65975B6236A629600815101 /* XCRemoteSwiftPackageReference "NetworkKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/avario/NetworkKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 1.0.0;
+			};
+		};
+		B65975B9236A62A800815101 /* XCRemoteSwiftPackageReference "NetworkImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/avario/NetworkImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B65975B7236A629600815101 /* NetworkKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B65975B6236A629600815101 /* XCRemoteSwiftPackageReference "NetworkKit" */;
+			productName = NetworkKit;
+		};
+		B65975BA236A62A800815101 /* NetworkImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B65975B9236A62A800815101 /* XCRemoteSwiftPackageReference "NetworkImage" */;
+			productName = NetworkImage;
+		};
 		B69AB6D32354225B0016883E /* FormatKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FormatKit;
-		};
-		B6DB2090235FDD7B006C03B4 /* NetworkImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6DB208F235FDD7B006C03B4 /* XCRemoteSwiftPackageReference "NetworkImage" */;
-			productName = NetworkImage;
-		};
-		B6E72203235D33720001CEB7 /* NetworkKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6E72202235D33720001CEB7 /* XCRemoteSwiftPackageReference "NetworkKit" */;
-			productName = NetworkKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
