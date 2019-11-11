@@ -11,23 +11,25 @@ import NetworkImage
 
 struct MovieSummaryRow: View {
 
-	var movieSummary: MovieSummary
+	let imageURL: URL
+	let title: String
+	let starRating: Int
 
 	var body: some View {
 		ZStack(alignment: .bottom) {
-			NetworkImage(url: movieSummary.backdropImageURL)
+			NetworkImage(url: imageURL)
 				.scaledToFill()
 				.frame(height: 185)
 
 			VStack(alignment: .leading, spacing: 5) {
-				Text(verbatim: movieSummary.title)
+				Text(verbatim: title)
 					.font(.largeTitle)
 					.fontWeight(.heavy)
 					.foregroundColor(.primary)
 					.lineLimit(2)
 
 				HStack {
-					StarRating(rating: movieSummary.starRating)
+					StarRating(rating: starRating)
 					Spacer()
 				}
 			}
@@ -42,7 +44,10 @@ struct MovieSummaryRow: View {
 
 struct MovieSummaryRow_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieSummaryRow(movieSummary: try! FetchPopularMovies().preview(on: MoviesNetwork()).results[0])
+		MovieSummaryRow(
+			imageURL: URL(string: "image.tmdb.org/t/p/w1280/m67smI1IIMmYzCl9axvKNULVKLr")!,
+			title: "Toy Story",
+			starRating: 4)
 			.previewLayout(.sizeThatFits)
 			.padding()
 	}

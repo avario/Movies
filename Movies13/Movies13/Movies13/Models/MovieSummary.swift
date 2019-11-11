@@ -28,7 +28,7 @@ extension MovieSummary {
 
 	var backdropImageURL: URL {
 		guard let backdropPath = backdropPath else {
-			return URL(string: "")!
+			return URL(string: "https://avatars1.githubusercontent.com/u/2192944")!
 		}
 		let baseURL = URL(string: "https://image.tmdb.org/t/p/w1280")!
 		return baseURL.appendingPathComponent(backdropPath)

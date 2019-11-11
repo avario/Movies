@@ -11,29 +11,15 @@ import Combine
 
 class PopularMoviesFetcher: ObservableObject {
 
-	enum State {
-		case loading
-		case error(message: String)
-		case fetched(movieSummaries: [MovieSummary])
-	}
-
-	@Published var state: State = .loading
+	@Published var movieSummaries: [MovieSummary] = []
 
 	func fetch(from moviesNetwork: MoviesNetwork) {
 		request = FetchPopularMovies()
 			.request(on: moviesNetwork)
-			.map { .fetched(movieSummaries: $0.results) }
-			.catch { error -> Just<State> in
-				switch error {
-				case .local:
-					return Just(.error(message: "Failed to load movies."))
-
-				case .remote(let remoteError):
-					return Just(.error(message: remoteError.message))
-				}
-			}
+			.map { $0.results }
+			.replaceError(with: [])
 			.receive(on: DispatchQueue.main)
-			.assign(to: \.state, on: self)
+			.assign(to: \.movieSummaries, on: self)
 	}
 
 	private var request: Cancellable?

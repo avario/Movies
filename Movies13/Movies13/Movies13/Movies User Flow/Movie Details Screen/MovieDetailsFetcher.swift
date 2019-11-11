@@ -32,6 +32,7 @@ class MovieDetailsFetcher: ObservableObject {
 					return Just(.error(message: remoteError.message))
 				}
 			}
+			.receive(on: DispatchQueue.main)
 			.assign(to: \.state, on: self)
 	}
 

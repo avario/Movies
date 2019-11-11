@@ -12,45 +12,46 @@ import NetworkKit
 struct PopularMoviesScreen: View {
 
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
-
 	@ObservedObject var popularMoviesFetcher: PopularMoviesFetcher = .init()
 
 	var body: some View {
-		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
-			switch popularMoviesFetcher.state {
-			case .loading:
-				return
-					ActivityIndicator()
-						.eraseToAnyView()
+		PopularMoviesView(rows: popularMoviesFetcher.movieSummaries
+			.map({ .init(
+				id: $0.id,
+				summaryRow: MovieSummaryRow(imageURL: $0.backdropImageURL, title: $0.title, starRating: $0.starRating),
+				destination: MovieDetailsScreen(movieSummary: $0)) }))
+			.onAppear { self.popularMoviesFetcher.fetch(from: self.moviesNetwork) }
+	}
+}
 
-			case .error(let errorMessage):
-				return
-					Text(errorMessage)
-						.foregroundColor(.secondary)
-						.eraseToAnyView()
+struct PopularMoviesView: View {
 
-			case .fetched(let movieSummaries):
-				return
-					ForEach(movieSummaries) { movieSummary in
-						NavigationLink(destination: MovieDetailsScreen(movieSummary: movieSummary)) {
-							MovieSummaryRow(movieSummary: movieSummary)
-						}
-					}.eraseToAnyView()
+	struct Row: Identifiable {
+		let id: Int
+		let summaryRow: MovieSummaryRow
+		let destination: MovieDetailsScreen
+	}
+
+	let rows: [Row]
+
+	var body: some View {
+		List {
+			ForEach(rows) { row in
+				NavigationLink(destination: row.destination) {
+					row.summaryRow
+				}
 			}
 		}
-		.onAppear { self.popularMoviesFetcher.fetch(from: self.moviesNetwork) }
 		.navigationBarTitle("Popular Movies")
 	}
 }
 
-struct PopularMoviesScreen_Previews: PreviewProvider {
-
-	static var previews: some View {
-		NavigationView {
-			PopularMoviesScreen()
-		}
-		.environmentObject(MoviesNetwork().preview(.always))
-		.onAppear { UIView.setAnimationsEnabled(false) }
-		.previewLayout(.sizeThatFits)
-	}
-}
+//struct PopularMoviesView_Previews: PreviewProvider {
+//
+//	static var previews: some View {
+//		NavigationView {
+//			PopularMoviesView(movieSummaries: try! FetchPopularMovies().preview(on: MoviesNetwork()).results)
+//		}
+//		.previewLayout(.sizeThatFits)
+//	}
+//}
