@@ -15,30 +15,40 @@ struct PopularMoviesScreen: View {
 	@ObservedObject var popularMoviesFetcher: PopularMoviesFetcher = .init()
 
 	var body: some View {
-		PopularMoviesView(rows: popularMoviesFetcher.movieSummaries
-			.map({ .init(
-				id: $0.id,
-				summaryRow: MovieSummaryRow(imageURL: $0.backdropImageURL, title: $0.title, starRating: $0.starRating),
-				destination: MovieDetailsScreen(movieSummary: $0)) }))
+		PopularMoviesView(model: .init(movieSummaries: popularMoviesFetcher.movieSummaries))
 			.onAppear { self.popularMoviesFetcher.fetch(from: self.moviesNetwork) }
 	}
 }
 
-struct PopularMoviesView: View {
+extension PopularMoviesViewModel {
+	init(movieSummaries: [MovieSummary]) {
+		rows = movieSummaries
+			.map({ .init(
+				id: $0.id,
+				summaryRowModel: .init(for: $0),
+				destination: MovieDetailsScreen(movieSummary: $0)) })
+	}
+}
 
+struct PopularMoviesViewModel {
 	struct Row: Identifiable {
 		let id: Int
-		let summaryRow: MovieSummaryRow
+		let summaryRowModel: MovieSummaryRowModel
 		let destination: MovieDetailsScreen
 	}
 
 	let rows: [Row]
+}
+
+struct PopularMoviesView: View {
+
+	let model: PopularMoviesViewModel
 
 	var body: some View {
 		List {
-			ForEach(rows) { row in
+			ForEach(model.rows) { row in
 				NavigationLink(destination: row.destination) {
-					row.summaryRow
+					MovieSummaryRow(model: row.summaryRowModel)
 				}
 			}
 		}
@@ -46,12 +56,12 @@ struct PopularMoviesView: View {
 	}
 }
 
-//struct PopularMoviesView_Previews: PreviewProvider {
-//
-//	static var previews: some View {
-//		NavigationView {
-//			PopularMoviesView(movieSummaries: try! FetchPopularMovies().preview(on: MoviesNetwork()).results)
-//		}
-//		.previewLayout(.sizeThatFits)
-//	}
-//}
+struct PopularMoviesView_Previews: PreviewProvider {
+
+	static var previews: some View {
+		NavigationView {
+			PopularMoviesView(model: .init(movieSummaries: try! FetchPopularMovies().preview(on: MoviesNetwork()).results))
+		}
+		.previewLayout(.sizeThatFits)
+	}
+}
