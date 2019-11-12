@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import NetworkKit
 
 class MovieDetailsFetcher: ObservableObject {
 	
@@ -32,9 +33,33 @@ class MovieDetailsFetcher: ObservableObject {
 					return Just(.error(message: remoteError.message))
 				}
 			}
-			.receive(on: DispatchQueue.main)
+			.receive(on: RunLoop.main)
 			.assign(to: \.state, on: self)
 	}
 
 	private var request: Cancellable?
+}
+
+class Fetcher<R: NetworkRequest, N: Network>: ObservableObject {
+	enum State {
+		case loading
+		case error(NetworkError<N.RemoteError>)
+		case fetched(R.Response)
+	}
+
+	@Published var state: State = .loading
+
+	func fetch(_ request: R, on network: N) {
+		cancellable = request
+			.request(on: network)
+			.map { .fetched($0) }
+			.catch { error -> Just<State> in
+				return Just(.error(error))
+			}
+			.receive(on: RunLoop.main)
+			.assign(to: \.state, on: self)
+	}
+
+	private var cancellable: Cancellable?
+
 }

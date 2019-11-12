@@ -1,26 +1,28 @@
 //
-//  MovieDetailsScreen.swift
+//  MovieDetailsView.swift
 //  Movies13
 //
-//  Created by Avario Babushka on 1/10/19.
+//  Created by Avario Babushka on 12/11/19.
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
 import SwiftUI
 import NetworkImage
 import FormatKit
-import NetworkKit
 
-struct MovieDetailsScreen: View {
+struct MovieDetailsView: View {
 
-	let movieSummary: MovieSummary
+	enum State {
+		case loading
+		case error(message: String)
+		case fetched(movieDetails: MovieDetails)
+	}
 
-	@EnvironmentObject var moviesNetwork: MoviesNetwork
-	@ObservedObject var movieDetailsFetcher: MovieDetailsFetcher = .init()
+	let state: State
 
 	var body: some View {
 		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
-			switch movieDetailsFetcher.state {
+			switch state {
 			case .loading:
 				return
 					ActivityIndicator()
@@ -61,24 +63,20 @@ struct MovieDetailsScreen: View {
 					.eraseToAnyView()
 			}
 		}
-		.onAppear { self.movieDetailsFetcher.fetch(forMovieID: self.movieSummary.id, from: self.moviesNetwork) }
-		.navigationBarTitle(movieSummary.title)
 	}
 
 	static let yearDateFormatter = DateFormatter()
 		.localizedDateFormatTemplate("yyyy")
 }
 
-struct MovieDetailsScreen_Previews: PreviewProvider {
+struct MovieDetailsView_Previews: PreviewProvider {
 
 	static let movieSummary = try! FetchPopularMovies().preview(on: MoviesNetwork()).results[0]
-	
+
 	static var previews: some View {
 		NavigationView {
-			MovieDetailsScreen(movieSummary: movieSummary)
+			MovieDetailsView(state: .fetched(movieDetails: try! FetchMovieDetails(movieID: movieSummary.id).preview(on: MoviesNetwork())))
 		}
-		.environmentObject(MoviesNetwork().preview(.always))
-		.onAppear { UIView.setAnimationsEnabled(false) }
 		.previewLayout(.sizeThatFits)
 	}
 }

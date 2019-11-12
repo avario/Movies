@@ -9,40 +9,25 @@
 import SwiftUI
 import NetworkImage
 
-struct MovieSummaryRowModel {
-	let imageURL: URL
-	let title: String
-	let starRating: Int
-}
-
-extension MovieSummaryRowModel {
-
-	init(for movieSummary: MovieSummary) {
-		self.imageURL = movieSummary.backdropImageURL
-		self.title = movieSummary.title
-		self.starRating = movieSummary.starRating
-	}
-}
-
 struct MovieSummaryRow: View {
 
-	let model: MovieSummaryRowModel
+	let movieSummary: MovieSummary
 
 	var body: some View {
 		ZStack(alignment: .bottom) {
-			NetworkImage(url: model.imageURL)
+			NetworkImage(url: movieSummary.backdropImageURL)
 				.scaledToFill()
 				.frame(height: 185)
 
 			VStack(alignment: .leading, spacing: 5) {
-				Text(verbatim: model.title)
+				Text(verbatim: movieSummary.title)
 					.font(.largeTitle)
 					.fontWeight(.heavy)
 					.foregroundColor(.primary)
 					.lineLimit(2)
 
 				HStack {
-					StarRating(rating: model.starRating)
+					StarRating(rating: movieSummary.starRating)
 					Spacer()
 				}
 			}
@@ -57,10 +42,7 @@ struct MovieSummaryRow: View {
 
 struct MovieSummaryRow_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieSummaryRow(model: .init(
-			imageURL: URL(string: "image.tmdb.org/t/p/w1280/m67smI1IIMmYzCl9axvKNULVKLr")!,
-			title: "Toy Story",
-			starRating: 4))
+		MovieSummaryRow(movieSummary: try! FetchPopularMovies().preview(on: MoviesNetwork()).results.first!)
 			.previewLayout(.sizeThatFits)
 			.padding()
 	}

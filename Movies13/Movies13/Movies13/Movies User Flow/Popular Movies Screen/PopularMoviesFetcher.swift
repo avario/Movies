@@ -18,7 +18,7 @@ class PopularMoviesFetcher: ObservableObject {
 			.request(on: moviesNetwork)
 			.map { $0.results }
 			.replaceError(with: [])
-			.receive(on: DispatchQueue.main)
+			.receive(on: RunLoop.main)
 			.assign(to: \.movieSummaries, on: self)
 	}
 
