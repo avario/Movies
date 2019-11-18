@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		let moviesUserFlow = NavigationView {
-			PopularMoviesScreen()
+			PopularMoviesViewController()
 		}
 		.environmentObject(MoviesNetwork())//.preview(mode: .success))
 //		.environment(\.networkImagePreviewMode, .success)

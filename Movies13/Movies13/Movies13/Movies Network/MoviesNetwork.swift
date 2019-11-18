@@ -12,10 +12,10 @@ import FormatKit
 
 class MoviesNetwork: Network, ObservableObject {
 
-	let baseURL: URL = Configuration.shared.baseURL
+	static let baseURL: URL = Configuration.shared.baseURL
 	let parameters: APICredentials = .init(apiKey: Configuration.shared.apiKey)
 
-	let dateDecodingStrategy: JSONDecoder.DateDecodingStrategy =
+	static let dateDecodingStrategy: JSONDecoder.DateDecodingStrategy =
 		.formatted(
 			DateFormatter()
 				.dateFormat("yyyy-MM-dd"))

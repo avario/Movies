@@ -21,7 +21,6 @@ struct MovieSummary: Decodable, Identifiable {
 		case backdropPath = "backdrop_path"
 		case rating = "vote_average"
 	}
-
 }
 
 extension MovieSummary {
@@ -37,5 +36,4 @@ extension MovieSummary {
 	var starRating: Int {
 		return Int((rating / 2).rounded())
 	}
-
 }

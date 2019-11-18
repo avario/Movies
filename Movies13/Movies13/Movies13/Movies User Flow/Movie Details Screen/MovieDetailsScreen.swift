@@ -2,83 +2,58 @@
 //  MovieDetailsScreen.swift
 //  Movies13
 //
-//  Created by Avario Babushka on 1/10/19.
+//  Created by Avario Babushka on 18/11/19.
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
 import SwiftUI
-import NetworkImage
-import FormatKit
 import NetworkKit
 
 struct MovieDetailsScreen: View {
 
-	let movieSummary: MovieSummary
-
-	@EnvironmentObject var moviesNetwork: MoviesNetwork
-	@ObservedObject var movieDetailsFetcher: MovieDetailsFetcher = .init()
+	let title: String
+	let state: FetchMovieDetails.Fetcher.State
 
 	var body: some View {
-		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
-			switch movieDetailsFetcher.state {
-			case .loading:
-				return
-					ActivityIndicator()
-						.eraseToAnyView()
-
-			case .error(let errorMessage):
-				return
-					Text(errorMessage)
-						.foregroundColor(.secondary)
-						.eraseToAnyView()
-
-			case .fetched(let movieDetails):
-				return
-					VStack(spacing: 10) {
-						NetworkImage(url: movieDetails.posterURL)
-							.scaledToFit()
-							.cornerRadius(5)
-							.frame(height: 400)
-							.shadow(radius: 10)
-
-						HStack {
-							Text("\(movieDetails.releaseDate, formatter: Self.yearDateFormatter)")
-								.font(.title)
-								.fontWeight(.heavy)
-
-							Text(verbatim: movieDetails.genres.map { $0.name }.joined(separator: ", "))
-								.font(.caption)
-								.foregroundColor(.secondary)
-						}
-
-						Text(verbatim: movieDetails.overview)
-							.lineLimit(nil)
-							.foregroundColor(.secondary)
-
-						StarRating(rating: movieDetails.starRating)
-					}
-					.padding()
-					.eraseToAnyView()
-			}
-		}
-		.onAppear { self.movieDetailsFetcher.fetch(forMovieID: self.movieSummary.id, from: self.moviesNetwork) }
-		.navigationBarTitle(movieSummary.title)
+		NetworkFetcherView(
+			state: state,
+			loading: {
+				ActivityIndicator()
+			},
+			error: { error in
+				ErrorView(error: error, defaultMessage: "Failed to load movie details.")
+			},
+			fetched: { movieDetails in
+				MovieDetailsView(movieDetails: movieDetails)
+			})
+			.navigationBarTitle(title)
 	}
-
-	static let yearDateFormatter = DateFormatter()
-		.localizedDateFormatTemplate("yyyy")
 }
 
 struct MovieDetailsScreen_Previews: PreviewProvider {
 
-	static let movieSummary = try! FetchPopularMovies().preview(on: MoviesNetwork()).results[0]
-	
+	static let movieSummary = FetchPopularMovies().preview.results[0]
+
 	static var previews: some View {
-		NavigationView {
-			MovieDetailsScreen(movieSummary: movieSummary)
+		Group {
+			NavigationView {
+				MovieDetailsScreen(
+					title: movieSummary.title,
+					state: .loading)
+			}
+//
+//			NavigationView {
+//				MovieDetailsScreen(
+//					title: movieSummary.title,
+//					state: .error(.local(.timeout)))
+//			}
+//
+//			NavigationView {
+//				MovieDetailsScreen(
+//					title: movieSummary.title,
+//					state: .fetched(FetchMovieDetails(movieID: movieSummary.id).preview))
+//			}
 		}
-		.environmentObject(MoviesNetwork().preview(.always))
-		.onAppear { UIView.setAnimationsEnabled(false) }
 		.previewLayout(.sizeThatFits)
 	}
 }

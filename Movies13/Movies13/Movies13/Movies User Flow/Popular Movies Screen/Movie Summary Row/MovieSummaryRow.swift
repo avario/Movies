@@ -42,7 +42,7 @@ struct MovieSummaryRow: View {
 
 struct MovieSummaryRow_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieSummaryRow(movieSummary: try! FetchPopularMovies().preview(on: MoviesNetwork()).results.first!)
+		MovieSummaryRow(movieSummary: FetchPopularMovies().preview.results[0])
 			.previewLayout(.sizeThatFits)
 			.padding()
 	}

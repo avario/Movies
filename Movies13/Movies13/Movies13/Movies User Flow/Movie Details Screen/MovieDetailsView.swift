@@ -2,7 +2,7 @@
 //  MovieDetailsView.swift
 //  Movies13
 //
-//  Created by Avario Babushka on 12/11/19.
+//  Created by Avario Babushka on 18/11/19.
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
@@ -12,56 +12,34 @@ import FormatKit
 
 struct MovieDetailsView: View {
 
-	enum State {
-		case loading
-		case error(message: String)
-		case fetched(movieDetails: MovieDetails)
-	}
-
-	let state: State
+	let movieDetails: MovieDetails
 
 	var body: some View {
-		List { () -> AnyView in // Must wrap with AnyView until SwiftUI supports switch statements
-			switch state {
-			case .loading:
-				return
-					ActivityIndicator()
-						.eraseToAnyView()
+		ScrollView {
+			VStack(spacing: 10) {
+				NetworkImage(url: movieDetails.posterURL)
+					.scaledToFit()
+					.cornerRadius(5)
+					.frame(height: 400)
+					.shadow(radius: 10)
 
-			case .error(let errorMessage):
-				return
-					Text(errorMessage)
+				HStack {
+					Text("\(movieDetails.releaseDate, formatter: Self.yearDateFormatter)")
+						.font(.title)
+						.fontWeight(.heavy)
+
+					Text(verbatim: movieDetails.genres.map { $0.name }.joined(separator: ", "))
+						.font(.caption)
 						.foregroundColor(.secondary)
-						.eraseToAnyView()
+				}
 
-			case .fetched(let movieDetails):
-				return
-					VStack(spacing: 10) {
-						NetworkImage(url: movieDetails.posterURL)
-							.scaledToFit()
-							.cornerRadius(5)
-							.frame(height: 400)
-							.shadow(radius: 10)
+				Text(verbatim: movieDetails.overview)
+					.lineLimit(nil)
+					.foregroundColor(.secondary)
 
-						HStack {
-							Text("\(movieDetails.releaseDate, formatter: Self.yearDateFormatter)")
-								.font(.title)
-								.fontWeight(.heavy)
-
-							Text(verbatim: movieDetails.genres.map { $0.name }.joined(separator: ", "))
-								.font(.caption)
-								.foregroundColor(.secondary)
-						}
-
-						Text(verbatim: movieDetails.overview)
-							.lineLimit(nil)
-							.foregroundColor(.secondary)
-
-						StarRating(rating: movieDetails.starRating)
-					}
-					.padding()
-					.eraseToAnyView()
+				StarRating(rating: movieDetails.starRating)
 			}
+			.padding()
 		}
 	}
 
@@ -71,12 +49,10 @@ struct MovieDetailsView: View {
 
 struct MovieDetailsView_Previews: PreviewProvider {
 
-	static let movieSummary = try! FetchPopularMovies().preview(on: MoviesNetwork()).results[0]
+	static let movieSummary = FetchPopularMovies().preview.results[0]
 
 	static var previews: some View {
-		NavigationView {
-			MovieDetailsView(state: .fetched(movieDetails: try! FetchMovieDetails(movieID: movieSummary.id).preview(on: MoviesNetwork())))
-		}
-		.previewLayout(.sizeThatFits)
+		MovieDetailsView(movieDetails: FetchMovieDetails(movieID: movieSummary.id).preview)
+			.previewLayout(.sizeThatFits)
 	}
 }

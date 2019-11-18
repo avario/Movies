@@ -11,6 +11,8 @@ import NetworkKit
 
 struct FetchPopularMovies: NetworkRequest {
 
+	typealias Network = MoviesNetwork
+
 	let method: HTTPMethod = .get
 	let path: String = "discover/movie"
 	let parameters: Parameters
