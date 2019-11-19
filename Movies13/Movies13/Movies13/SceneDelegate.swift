@@ -6,24 +6,21 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-	
 	var window: UIWindow?
-	
+
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-		
 		guard let windowScene = scene as? UIWindowScene else {
 			return
 		}
 
 		let moviesUserFlow = NavigationView {
-			PopularMoviesViewController()
+			PopularMoviesScreenController()
 		}
-		.environmentObject(MoviesNetwork())//.preview(mode: .success))
-//		.environment(\.networkImagePreviewMode, .success)
+		.environmentObject(MoviesNetwork())
 
 		let window = UIWindow(windowScene: windowScene)
 		window.rootViewController = UIHostingController(rootView: moviesUserFlow)
@@ -37,4 +34,3 @@ extension View {
 		return AnyView(self)
 	}
 }
-

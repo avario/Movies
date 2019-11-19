@@ -6,11 +6,10 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
-import SwiftUI
 import NetworkImage
+import SwiftUI
 
 struct MovieSummaryRow: View {
-
 	let movieSummary: MovieSummary
 
 	var body: some View {

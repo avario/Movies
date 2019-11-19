@@ -6,11 +6,10 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
-import SwiftUI
 import NetworkKit
+import SwiftUI
 
 struct MovieDetailsScreen: View {
-
 	let title: String
 	let state: FetchMovieDetails.Fetcher.State
 
@@ -25,13 +24,12 @@ struct MovieDetailsScreen: View {
 			},
 			fetched: { movieDetails in
 				MovieDetailsView(movieDetails: movieDetails)
-			})
+		})
 			.navigationBarTitle(title)
 	}
 }
 
 struct MovieDetailsScreen_Previews: PreviewProvider {
-
 	static let movieSummary = FetchPopularMovies().preview.results[0]
 
 	static var previews: some View {
@@ -39,20 +37,20 @@ struct MovieDetailsScreen_Previews: PreviewProvider {
 			NavigationView {
 				MovieDetailsScreen(
 					title: movieSummary.title,
+					state: .fetched(FetchMovieDetails(movieID: movieSummary.id).preview))
+			}
+
+			NavigationView {
+				MovieDetailsScreen(
+					title: movieSummary.title,
 					state: .loading)
 			}
-//
-//			NavigationView {
-//				MovieDetailsScreen(
-//					title: movieSummary.title,
-//					state: .error(.local(.timeout)))
-//			}
-//
-//			NavigationView {
-//				MovieDetailsScreen(
-//					title: movieSummary.title,
-//					state: .fetched(FetchMovieDetails(movieID: movieSummary.id).preview))
-//			}
+
+			NavigationView {
+				MovieDetailsScreen(
+					title: movieSummary.title,
+					state: .error(.local(.timeout)))
+			}
 		}
 		.previewLayout(.sizeThatFits)
 	}

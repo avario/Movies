@@ -6,13 +6,11 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
-import SwiftUI
-import NetworkImage
 import FormatKit
 import NetworkKit
+import SwiftUI
 
 struct MovieDetailsScreenController: View {
-
 	let movieSummary: MovieSummary
 
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
