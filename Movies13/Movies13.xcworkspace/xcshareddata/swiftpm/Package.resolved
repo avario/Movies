@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/avario/NetworkImage.git",
         "state": {
           "branch": null,
-          "revision": "f1d081109e94cbb2d98c70fbbe3f2d7f09e8f6fd",
-          "version": "1.0.0"
+          "revision": "495fe6cd83c031f449c1c5de9805bb58b1cb4fd3",
+          "version": "1.0.3"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/avario/NetworkKit.git",
         "state": {
           "branch": null,
-          "revision": "f369c95efcdd923c95e0d95337edee7c4ea5f444",
-          "version": "1.0.0"
+          "revision": "4cd16f8964f20f9553e9d2497100ca63d570364c",
+          "version": "1.1.0"
         }
       }
     ]

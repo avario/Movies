@@ -7,10 +7,4 @@
    <FileRef
       location = "group:FormatKit">
    </FileRef>
-   <FileRef
-      location = "group:../../NetworkKit">
-   </FileRef>
-   <FileRef
-      location = "group:../../NetworkImage">
-   </FileRef>
 </Workspace>
