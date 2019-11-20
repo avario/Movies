@@ -1,0 +1,262 @@
+[
+	{
+		"adult": false,
+		"backdrop_path": "/m67smI1IIMmYzCl9axvKNULVKLr.jpg",
+		"genre_ids": [
+			12,
+			16,
+			35,
+			10751
+		],
+		"id": 301528,
+		"original_language": "en",
+		"original_title": "Toy Story 4",
+		"overview": "Woody has always been confident about his place in the world and that his priority is taking care of his kid, whether that's Andy or Bonnie. But when Bonnie adds a reluctant new toy called \"Forky\" to her room, a road trip adventure alongside old and new friends will show Woody how big the world can be for a toy.",
+		"popularity": 181.028,
+		"poster_path": "/w9kR8qbmQ01HwnvK4alvnQ2ca0L.jpg",
+		"release_date": "2019-06-21",
+		"title": "Toy Story 4",
+		"video": false,
+		"vote_average": 7.6,
+		"vote_count": 2350
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/vVpEOvdxVBP2aV166j5Xlvb5Cdc.jpg",
+		"genre_ids": [
+			28,
+			80,
+			53
+		],
+		"id": 458156,
+		"original_language": "en",
+		"original_title": "John Wick: Chapter 3 – Parabellum",
+		"overview": "Super-assassin John Wick returns with a $14 million price tag on his head and an army of bounty-hunting killers on his trail. After killing a member of the shadowy international assassin’s guild, the High Table, John Wick is excommunicado, but the world’s most ruthless hit men and women await his every turn.",
+		"popularity": 143.218,
+		"poster_path": "/ziEuG1essDuWuC5lpWUaw1uXY2O.jpg",
+		"release_date": "2019-05-17",
+		"title": "John Wick: Chapter 3 – Parabellum",
+		"video": false,
+		"vote_average": 7.1,
+		"vote_count": 2684
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/5myQbDzw3l8K9yofUXRJ4UTVgam.jpg",
+		"genre_ids": [
+			28,
+			12,
+			878
+		],
+		"id": 429617,
+		"original_language": "en",
+		"original_title": "Spider-Man: Far from Home",
+		"overview": "Peter Parker and his friends go on a summer trip to Europe. However, they will hardly be able to rest - Peter will have to agree to help Nick Fury uncover the mystery of creatures that cause natural disasters and destruction throughout the continent.",
+		"popularity": 234.305,
+		"poster_path": "/lcq8dVxeeOqHvvgcte707K0KVx5.jpg",
+		"release_date": "2019-07-02",
+		"title": "Spider-Man: Far from Home",
+		"video": false,
+		"vote_average": 7.7,
+		"vote_count": 4044
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/6X2YjjYcs8XyZRDmJAHNDlls7L4.jpg",
+		"genre_ids": [
+			35,
+			80,
+			18
+		],
+		"id": 429203,
+		"original_language": "en",
+		"original_title": "The Old Man & the Gun",
+		"overview": "The true story of Forrest Tucker, from his audacious escape from San Quentin at the age of 70 to an unprecedented string of heists that confounded authorities and enchanted the public. Wrapped up in the pursuit are a detective, who becomes captivated with Forrest’s commitment to his craft, and a woman, who loves him in spite of his chosen profession.",
+		"popularity": 283.548,
+		"poster_path": "/a4BfxRK8dBgbQqbRxPs8kmLd8LG.jpg",
+		"release_date": "2018-09-28",
+		"title": "The Old Man & the Gun",
+		"video": false,
+		"vote_average": 6.3,
+		"vote_count": 577
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/spYx9XQFODuqEVoPpvaJI1ksAVt.jpg",
+		"genre_ids": [
+			28,
+			53
+		],
+		"id": 522938,
+		"original_language": "en",
+		"original_title": "Rambo: Last Blood",
+		"overview": "When John Rambo's niece travels to Mexico to find the father that abandoned her and her mother, she finds herself in the grasps of Calle Mexican sex traffickers. When she doesn't return home as expected, John learns she's crossed into Mexico and sets out to get her back and make them pay.",
+		"popularity": 215.646,
+		"poster_path": "/kTQ3J8oTTKofAVLYnds2cHUz9KO.jpg",
+		"release_date": "2019-09-20",
+		"title": "Rambo: Last Blood",
+		"video": false,
+		"vote_average": 6.3,
+		"vote_count": 238
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/8moTOzunF7p40oR5XhlDvJckOSW.jpg",
+		"genre_ids": [
+			27
+		],
+		"id": 474350,
+		"original_language": "en",
+		"original_title": "It Chapter Two",
+		"overview": "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call.",
+		"popularity": 220.845,
+		"poster_path": "/zfE0R94v1E8cuKAerbskfD3VfUt.jpg",
+		"release_date": "2019-09-06",
+		"title": "It Chapter Two",
+		"video": false,
+		"vote_average": 7,
+		"vote_count": 1150
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/hpgda6P9GutvdkDX5MUJ92QG9aj.jpg",
+		"genre_ids": [
+			28
+		],
+		"id": 384018,
+		"original_language": "en",
+		"original_title": "Fast & Furious Presents: Hobbs & Shaw",
+		"overview": "A spinoff of The Fate of the Furious, focusing on Johnson's US Diplomatic Security Agent Luke Hobbs forming an unlikely alliance with Statham's Deckard Shaw.",
+		"popularity": 169.695,
+		"poster_path": "/keym7MPn1icW1wWfzMnW3HeuzWU.jpg",
+		"release_date": "2019-08-02",
+		"title": "Fast & Furious Presents: Hobbs & Shaw",
+		"video": false,
+		"vote_average": 6.5,
+		"vote_count": 1301
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/5GynP6w2OQWSbKnCLHrBIriF4Cw.jpg",
+		"genre_ids": [
+			35,
+			80,
+			18
+		],
+		"id": 540901,
+		"original_language": "en",
+		"original_title": "Hustlers",
+		"overview": "A crew of savvy former strip club employees band together to turn the tables on their Wall Street clients.",
+		"popularity": 152.505,
+		"poster_path": "/zBhv8rsLOfpFW2M5b6wW78Uoojs.jpg",
+		"release_date": "2019-09-13",
+		"title": "Hustlers",
+		"video": false,
+		"vote_average": 6.4,
+		"vote_count": 194
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/a1MlbLBk5Sy6YvMbSuKfwGlDVlb.jpg",
+		"genre_ids": [
+			12,
+			16,
+			35,
+			10751
+		],
+		"id": 920,
+		"original_language": "en",
+		"original_title": "Cars",
+		"overview": "Lightning McQueen, a hotshot rookie race car driven to succeed, discovers that life is about the journey, not the finish line, when he finds himself unexpectedly detoured in the sleepy Route 66 town of Radiator Springs. On route across the country to the big Piston Cup Championship in California to compete against two seasoned pros, McQueen gets to know the town's offbeat characters.",
+		"popularity": 115.712,
+		"poster_path": "/jpfkzbIXgKZqCZAkEkFH2VYF63s.jpg",
+		"release_date": "2006-06-09",
+		"title": "Cars",
+		"video": false,
+		"vote_average": 6.7,
+		"vote_count": 8142
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/rVqY0Bo4Npf6EIONUROxjYAJfmD.jpg",
+		"genre_ids": [
+			12,
+			35,
+			14,
+			10749,
+			10751
+		],
+		"id": 420817,
+		"original_language": "en",
+		"original_title": "Aladdin",
+		"overview": "A kindhearted street urchin named Aladdin embarks on a magical adventure after finding a lamp that releases a wisecracking genie while a power-hungry Grand Vizier vies for the same lamp that has the power to make their deepest wishes come true.",
+		"popularity": 127.171,
+		"poster_path": "/3iYQTLGoy7QnjcUYRJy4YrAgGvp.jpg",
+		"release_date": "2019-05-24",
+		"title": "Aladdin",
+		"video": false,
+		"vote_average": 7.1,
+		"vote_count": 3507
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/hO7KbdvGOtDdeg0W4Y5nKEHeDDh.jpg",
+		"genre_ids": [
+			80,
+			18,
+			53
+		],
+		"id": 475557,
+		"original_language": "en",
+		"original_title": "Joker",
+		"overview": "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
+		"popularity": 134.078,
+		"poster_path": "/lbGzEyESjANpOeD48aROlc3X7aa.jpg",
+		"release_date": "2019-10-04",
+		"title": "Joker",
+		"video": false,
+		"vote_average": 6.6,
+		"vote_count": 70
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/p3TCqUDoVsrIm8fHK9KOTfWnDjZ.jpg",
+		"genre_ids": [
+			12,
+			18,
+			878
+		],
+		"id": 419704,
+		"original_language": "en",
+		"original_title": "Ad Astra",
+		"overview": "An astronaut travels to the outer edges of the solar system to find his father and unravel a mystery that threatens the survival of our planet. He uncovers secrets which challenge the nature of human existence and our place in the cosmos.",
+		"popularity": 106.675,
+		"poster_path": "/fpe0eG2TBLJLQiqlhhvaWIfixXz.jpg",
+		"release_date": "2019-09-20",
+		"title": "Ad Astra",
+		"video": false,
+		"vote_average": 6.3,
+		"vote_count": 474
+	},
+	{
+		"adult": false,
+		"backdrop_path": "/kKTPv9LKKs5L3oO1y5FNObxAPWI.jpg",
+		"genre_ids": [
+			28,
+			35,
+			80,
+			18
+		],
+		"id": 466272,
+		"original_language": "en",
+		"original_title": "Once Upon a Time in Hollywood",
+		"overview": "A faded television actor and his stunt double strive to achieve fame and success in the film industry during the final years of Hollywood's Golden Age in 1969 Los Angeles.",
+		"popularity": 97.731,
+		"poster_path": "/8j58iEBw9pOXFD2L0nt0ZXeHviB.jpg",
+		"release_date": "2019-07-26",
+		"title": "Once Upon a Time in Hollywood",
+		"video": false,
+		"vote_average": 7.6,
+		"vote_count": 1936
+	}
+]

@@ -6,13 +6,12 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
+import FormatKit
 import Foundation
 import NetworkKit
-import FormatKit
 
 class MoviesNetwork: Network, ObservableObject {
-
-	static let baseURL: URL = Configuration.shared.baseURL
+	let baseURL: URL = Configuration.shared.baseURL
 	let parameters: APICredentials = .init(apiKey: Configuration.shared.apiKey)
 
 	static let dateDecodingStrategy: JSONDecoder.DateDecodingStrategy =

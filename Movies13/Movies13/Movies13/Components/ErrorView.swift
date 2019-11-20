@@ -28,3 +28,11 @@ struct ErrorView: View {
 			.foregroundColor(.secondary)
 	}
 }
+
+struct ErrorView_Previews: PreviewProvider {
+    static var previews: some View {
+		ErrorView(error: .local(.timeout), defaultMessage: "An unknown error occured.")
+			.previewLayout(.sizeThatFits)
+			.padding()
+    }
+}

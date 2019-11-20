@@ -10,9 +10,8 @@ import Foundation
 import NetworkKit
 
 struct FetchMovieDetails: NetworkRequest {
-
 	typealias Network = MoviesNetwork
-	
+
 	let method: HTTPMethod = .get
 	let path: String
 

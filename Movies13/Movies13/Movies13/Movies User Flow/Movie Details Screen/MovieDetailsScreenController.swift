@@ -14,14 +14,14 @@ struct MovieDetailsScreenController: View {
 	let movieSummary: MovieSummary
 
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
-	@ObservedObject var movieDetailsFetcher: FetchMovieDetails.Fetcher = .init()
+	@ObservedObject var movieDetailsFetcher: FetchMovieDetails.Requester = .init()
 
 	var body: some View {
 		MovieDetailsScreen(
 			title: movieSummary.title,
 			state: movieDetailsFetcher.state)
 			.onAppear {
-				self.movieDetailsFetcher.fetch(.init(movieID: self.movieSummary.id), on: self.moviesNetwork)
+				self.movieDetailsFetcher.request(.init(movieID: self.movieSummary.id), on: self.moviesNetwork)
 			}
 	}
 }

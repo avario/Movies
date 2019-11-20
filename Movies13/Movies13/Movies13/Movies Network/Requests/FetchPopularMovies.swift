@@ -10,7 +10,6 @@ import Foundation
 import NetworkKit
 
 struct FetchPopularMovies: NetworkRequest {
-
 	typealias Network = MoviesNetwork
 
 	let method: HTTPMethod = .get
@@ -18,7 +17,7 @@ struct FetchPopularMovies: NetworkRequest {
 	let parameters: Parameters
 	let encoding: ParameterEncoding = .url
 
-	init(sortBy: String =  "popularity.desc") {
+	init(sortBy: String = "popularity.desc") {
 		parameters = Parameters(sortBy: sortBy)
 	}
 

@@ -49,10 +49,8 @@ struct MovieDetailsView: View {
 
 struct MovieDetailsView_Previews: PreviewProvider {
 
-	static let movieSummary = FetchPopularMovies().preview.results[0]
-
 	static var previews: some View {
-		MovieDetailsView(movieDetails: FetchMovieDetails(movieID: movieSummary.id).preview)
+		MovieDetailsView(movieDetails: MovieDetails.preview("MovieDetails_Preview", decoder: MoviesNetwork.decoder))
 			.previewLayout(.sizeThatFits)
 	}
 }

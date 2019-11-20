@@ -11,10 +11,10 @@ import SwiftUI
 
 struct PopularMoviesScreenController: View {
 	@EnvironmentObject var moviesNetwork: MoviesNetwork
-	@ObservedObject var popularMoviesFetcher: FetchPopularMovies.Fetcher = .init()
+	@ObservedObject var popularMoviesFetcher: FetchPopularMovies.Requester = .init()
 
 	var body: some View {
 		PopularMoviesScreen(state: popularMoviesFetcher.state)
-			.onAppear { self.popularMoviesFetcher.fetch(.init(), on: self.moviesNetwork) }
+			.onAppear { self.popularMoviesFetcher.request(.init(), on: self.moviesNetwork) }
 	}
 }

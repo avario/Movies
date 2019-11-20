@@ -10,10 +10,10 @@ import NetworkKit
 import SwiftUI
 
 struct PopularMoviesScreen: View {
-	let state: FetchPopularMovies.Fetcher.State
+	let state: FetchPopularMovies.Requester.State
 
 	var body: some View {
-		NetworkFetcherView(
+		NetworkRequesterView(
 			state: state,
 			loading: {
 				ActivityIndicator()
@@ -33,18 +33,18 @@ struct PopularMoviesScreen_Previews: PreviewProvider {
 		Group {
 			NavigationView {
 				PopularMoviesScreen(
-					state: .fetched(FetchPopularMovies().preview))
-			}
+					state: .success(FetchPopularMovies.Response.preview("FetchPopularMoviesResponse_Preview", decoder: MoviesNetwork.decoder)))
+			}.previewDisplayName("Loaded")
 
 			NavigationView {
 				PopularMoviesScreen(
 					state: .loading)
-			}
+			}.previewDisplayName("Loading")
 
 			NavigationView {
 				PopularMoviesScreen(
-					state: .error(.local(.timeout)))
-			}
+					state: .failure(.local(.timeout)))
+			}.previewDisplayName("Error")
 		}
 		.previewLayout(.sizeThatFits)
 	}
