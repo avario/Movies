@@ -14,18 +14,24 @@ struct MovieDetailsScreen: View {
 	let state: FetchMovieDetails.Requester.State
 
 	var body: some View {
-		NetworkRequesterView(
-			state: state,
-			loading: {
-				ActivityIndicator()
-			},
-			error: { error in
-				ErrorView(error: error, defaultMessage: "Failed to load movie details.")
-			},
-			fetched: { movieDetails in
-				MovieDetailsView(movieDetails: movieDetails)
-		})
+		content
 			.navigationBarTitle(title)
+	}
+
+	var content: AnyView {
+		switch state {
+		case .loading:
+			return ActivityIndicator()
+				.eraseToAnyView()
+
+		case .failure(let error):
+			return	ErrorView(error: error, defaultMessage: "Failed to load movie details.")
+				.eraseToAnyView()
+
+		case .success(let movieDetails):
+			return MovieDetailsView(movieDetails: movieDetails)
+				.eraseToAnyView()
+		}
 	}
 }
 

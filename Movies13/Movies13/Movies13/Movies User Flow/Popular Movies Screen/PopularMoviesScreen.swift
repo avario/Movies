@@ -13,18 +13,24 @@ struct PopularMoviesScreen: View {
 	let state: FetchPopularMovies.Requester.State
 
 	var body: some View {
-		NetworkRequesterView(
-			state: state,
-			loading: {
-				ActivityIndicator()
-			},
-			error: { error in
-				ErrorView(error: error, defaultMessage: "Failed to load movies.")
-			},
-			fetched: { response in
-				PopularMoviesList(movieSummaries: response.results)
-		})
+		content
 			.navigationBarTitle("Popular Movies")
+	}
+
+	var content: AnyView {
+		switch state {
+		case .loading:
+			return ActivityIndicator()
+				.eraseToAnyView()
+
+		case .failure(let error):
+			return ErrorView(error: error, defaultMessage: "Failed to load movies.")
+				.eraseToAnyView()
+
+		case .success(let response):
+			return PopularMoviesList(movieSummaries: response.results)
+				.eraseToAnyView()
+		}
 	}
 }
 
