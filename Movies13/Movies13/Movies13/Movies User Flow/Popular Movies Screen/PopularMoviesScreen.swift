@@ -28,7 +28,7 @@ struct PopularMoviesScreen: View {
 				.eraseToAnyView()
 
 		case .success(let response):
-			return PopularMoviesList(movieSummaries: response.results)
+			return MovieSummariesList(movieSummaries: response.results)
 				.eraseToAnyView()
 		}
 	}
