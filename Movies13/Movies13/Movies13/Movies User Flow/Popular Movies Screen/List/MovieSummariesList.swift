@@ -12,15 +12,36 @@ struct MovieSummariesList: View {
 	let movieSummaries: [MovieSummary]
 
 	var body: some View {
-		Content(
-			rowModels: movieSummaries.map({ movieSummary in
-				.init(
-					id: movieSummary.id,
-					rowModel: MovieSummaryRow.Model.from(movieSummary: movieSummary),
-					destination: {
-						MovieDetailsScreenController(movieSummary: movieSummary)
-							.eraseToAnyView()
-					})
-			}))
+		MovieSummariesListView(
+			rowModels: movieSummaries.map(MovieSummaryRow.Model.from(movieSummary:)),
+			destinations: { id in
+				MovieDetailsScreenController(movieSummary: self.movieSummaries.first(with: id)!)
+					.eraseToAnyView()
+			})
+	}
+}
+
+struct MovieSummariesListView: View {
+	let rowModels: [MovieSummaryRow.Model]
+	let destinations: (_ id: Int) -> AnyView
+
+	var body: some View {
+		List(rowModels) { model in
+			NavigationLink(destination: self.destinations(model.id)) {
+				MovieSummaryRow(model: model)
+			}
+		}
+	}
+}
+
+struct PopularMoviesListView_Previews: PreviewProvider {
+	static let rowModels = [MovieSummary].preview("MovieSummaries_Preview", decoder: MoviesNetwork.decoder)
+		.map(MovieSummaryRow.Model.from(movieSummary:))
+
+	static var previews: some View {
+		MovieSummariesListView(
+			rowModels: rowModels,
+			destinations: { _ in EmptyView().eraseToAnyView() })
+			.previewLayout(.sizeThatFits)
 	}
 }
