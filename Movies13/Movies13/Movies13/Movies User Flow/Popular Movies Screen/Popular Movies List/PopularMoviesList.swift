@@ -13,7 +13,7 @@ struct PopularMoviesList: View {
 
 	var body: some View {
 		List(movieSummaries) { movieSummary in
-			NavigationLink(destination: MovieDetailsScreenController(movieSummary: movieSummary)) {
+			NavigationLink(destination: MovieDetailsScreen(movieSummary: movieSummary)) {
 				MovieSummaryRow(movieSummary: movieSummary)
 			}
 		}

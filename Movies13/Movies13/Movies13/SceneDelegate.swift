@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		let moviesUserFlow = NavigationView {
-			PopularMoviesScreenController()
+			PopularMoviesScreen()
 		}
 		.environmentObject(MoviesNetwork())
 
