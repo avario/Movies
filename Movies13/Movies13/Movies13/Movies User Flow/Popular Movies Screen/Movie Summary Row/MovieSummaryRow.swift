@@ -10,24 +10,23 @@ import NetworkImage
 import SwiftUI
 
 struct MovieSummaryRow: View {
-
-	let model: Model
+	let movieSummary: MovieSummary
 
 	var body: some View {
 		ZStack(alignment: .bottom) {
-			NetworkImage(url: model.backgroundImageURL)
+			NetworkImage(url: movieSummary.backdropImageURL)
 				.scaledToFill()
 				.frame(height: 185)
 
 			VStack(alignment: .leading, spacing: 5) {
-				Text(verbatim: model.title)
+				Text(verbatim: movieSummary.title)
 					.font(.largeTitle)
 					.fontWeight(.heavy)
 					.foregroundColor(.primary)
 					.lineLimit(2)
 
 				HStack {
-					StarRating(rating: model.starRating)
+					StarRating(rating: movieSummary.starRating)
 					Spacer()
 				}
 			}
@@ -41,14 +40,9 @@ struct MovieSummaryRow: View {
 }
 
 struct MovieSummaryRow_Previews: PreviewProvider {
-	
+	static let movieSummary = [MovieSummary].preview("MovieSummaries_Preview", decoder: MoviesNetwork.decoder)[0]
 	static var previews: some View {
-		MovieSummaryRow(
-			model: .init(
-				id: 0,
-				title: "Toy Story 4",
-				starRating: 4,
-				backgroundImageURL: URL(string: "https://image.tmdb.org/t/p/w1280/m67smI1IIMmYzCl9axvKNULVKLr")!))
+		MovieSummaryRow(movieSummary: movieSummary)
 			.previewLayout(.sizeThatFits)
 			.padding()
 	}

@@ -34,17 +34,3 @@ extension View {
 		return AnyView(self)
 	}
 }
-
-extension Collection where Element: Identifiable {
-	func first(with id: Element.ID) -> Element? {
-		first { (element) -> Bool in
-			element.id == id
-		}
-	}
-
-	func first<I: Identifiable>(matching identifiable: I) -> Element? where I.ID == Element.ID {
-		first { (element) -> Bool in
-			element.id == identifiable.id
-		}
-	}
-}
