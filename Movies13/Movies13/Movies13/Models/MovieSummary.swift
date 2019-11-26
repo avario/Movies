@@ -9,7 +9,6 @@
 import Foundation
 
 struct MovieSummary: Decodable, Identifiable {
-
 	let id: Int
 	let title: String
 	private let rating: Double
@@ -24,7 +23,6 @@ struct MovieSummary: Decodable, Identifiable {
 }
 
 extension MovieSummary {
-
 	var backdropImageURL: URL {
 		guard let backdropPath = backdropPath else {
 			return URL(string: "https://avatars1.githubusercontent.com/u/2192944")!

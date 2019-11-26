@@ -6,11 +6,10 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class MovieDetailsFetcher: ObservableObject {
-
 	enum State {
 		case notStarted
 		case loading

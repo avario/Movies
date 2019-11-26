@@ -40,7 +40,7 @@ struct MovieSummaryRow: View {
 }
 
 struct MovieSummaryRow_Previews: PreviewProvider {
-	static let movieSummary = [MovieSummary].preview("MovieSummaries_Preview", decoder: MoviesNetwork.decoder)[0]
+	static let movieSummary = [MovieSummary].preview("MovieSummaries", decoder: MoviesNetwork.decoder)[0]
 	static var previews: some View {
 		MovieSummaryRow(movieSummary: movieSummary)
 			.previewLayout(.sizeThatFits)

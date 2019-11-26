@@ -6,12 +6,11 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
-import SwiftUI
-import NetworkImage
 import FormatKit
+import NetworkImage
+import SwiftUI
 
 struct MovieDetailsView: View {
-
 	let movieDetails: MovieDetails
 
 	var body: some View {
@@ -48,9 +47,8 @@ struct MovieDetailsView: View {
 }
 
 struct MovieDetailsView_Previews: PreviewProvider {
-
 	static var previews: some View {
-		MovieDetailsView(movieDetails: MovieDetails.preview("MovieDetails_Preview", decoder: MoviesNetwork.decoder))
+		MovieDetailsView(movieDetails: MovieDetails.preview("MovieDetails", decoder: MoviesNetwork.decoder))
 			.previewLayout(.sizeThatFits)
 	}
 }

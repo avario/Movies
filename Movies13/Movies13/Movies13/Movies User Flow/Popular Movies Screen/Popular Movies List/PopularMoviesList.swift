@@ -22,7 +22,7 @@ struct PopularMoviesList: View {
 
 struct PopularMoviesList_Previews: PreviewProvider {
 	static var previews: some View {
-		PopularMoviesList(movieSummaries: [MovieSummary].preview("MovieSummaries_Preview", decoder: MoviesNetwork.decoder))
+		PopularMoviesList(movieSummaries: [MovieSummary].preview("MovieSummaries", decoder: MoviesNetwork.decoder))
 			.previewLayout(.sizeThatFits)
 	}
 }

@@ -6,13 +6,10 @@
 //  Copyright © 2019 Avario Babushka. All rights reserved.
 //
 
-import Foundation
-
-import Foundation
 import Combine
+import Foundation
 
 class PopularMoviesFetcher: ObservableObject {
-
 	enum State {
 		case notStarted
 		case loading

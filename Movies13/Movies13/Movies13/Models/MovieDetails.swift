@@ -9,7 +9,6 @@
 import Foundation
 
 struct MovieDetails: Decodable {
-	
 	let id: Int
 	let title: String
 	let releaseDate: Date
@@ -32,18 +31,15 @@ struct MovieDetails: Decodable {
 		let id: Int
 		let name: String
 	}
-
 }
 
 extension MovieDetails {
-
 	var posterURL: URL {
 		let baseUrl = URL(string: "https://image.tmdb.org/t/p/w780")!
 		return baseUrl.appendingPathComponent(posterPath)
 	}
-	
+
 	var starRating: Int {
 		return Int((rating / 2).rounded())
 	}
-
 }

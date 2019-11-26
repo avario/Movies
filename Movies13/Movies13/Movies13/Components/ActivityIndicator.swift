@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct ActivityIndicator: UIViewRepresentable {
-
 	var isLoading: Bool = true
 
 	func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
@@ -22,13 +21,13 @@ struct ActivityIndicator: UIViewRepresentable {
 		return activityIndicator
 	}
 
-	func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) { }
+	func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {}
 }
 
 struct ActivityIndicator_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityIndicator(isLoading: true)
+	static var previews: some View {
+		ActivityIndicator(isLoading: true)
 			.previewLayout(.sizeThatFits)
 			.padding()
-    }
+	}
 }

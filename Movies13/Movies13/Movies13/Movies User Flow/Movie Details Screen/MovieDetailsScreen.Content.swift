@@ -25,7 +25,7 @@ extension MovieDetailsScreen {
 					.eraseToAnyView()
 
 			case .error(let message):
-				return	Text(message)
+				return Text(message)
 					.foregroundColor(.secondary)
 					.eraseToAnyView()
 
