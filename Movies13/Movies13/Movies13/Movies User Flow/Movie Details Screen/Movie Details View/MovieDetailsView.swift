@@ -27,7 +27,7 @@ struct MovieDetailsView: View {
 						.font(.title)
 						.fontWeight(.heavy)
 
-					Text(verbatim: movieDetails.genres.map { $0.name }.joined(separator: ", "))
+					Text(verbatim: ListFormatter().string(from: movieDetails.genres.map { $0.name })!)
 						.font(.caption)
 						.foregroundColor(.secondary)
 				}
